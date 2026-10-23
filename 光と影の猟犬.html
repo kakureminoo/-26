@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>光と影の猟犬</title>
+<style>
+:root{color-scheme:dark;--gold:#e8c586;--muted:#91a1b3;--line:#36404c;--panel:#151e28;--ink:#f0eee7;--violet:#bb9bed}
+*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden}body{background:radial-gradient(ellipse at 30% 0,#283440,#0b1017 66%);color:var(--ink);font:14px/1.5 system-ui,-apple-system,"Hiragino Kaku Gothic ProN",Meiryo,sans-serif}button,input{font:inherit}button{min-height:42px;border:1px solid #4a5360;border-radius:9px;padding:8px 14px;color:var(--ink);background:linear-gradient(145deg,#283442,#1a2430);cursor:pointer;transition:background .15s,border-color .15s}button:hover:not(:disabled){border-color:#ceb57e;background:#34404b}button:disabled{opacity:.4;cursor:default}button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}button.primary{background:linear-gradient(115deg,#a67c43,#79562f);border-color:#d3b47a;color:#fff6df;font-weight:700}button.ghost{background:transparent;color:#adb9c5}button.active{border-color:#d7bd86;background:#4c4030;color:#ffe6b8}h1,h2,h3,p{margin:0}h2{font-size:19px;font-weight:650;color:#f2d7a7}h3{font-size:15px}.hidden{display:none!important}.small{font-size:12px}.muted,.hint{color:var(--muted)}.row,.between,.section-head{display:flex;align-items:center;gap:8px}.between,.section-head{justify-content:space-between}.row{flex-wrap:wrap}.wrap{width:100%;height:100vh;height:100dvh;padding:max(8px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(10px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));display:grid;grid-template-rows:52px minmax(0,1fr);gap:10px}header{display:flex;align-items:center;gap:18px;min-width:0;border-bottom:1px solid #b0b5bb21;padding-bottom:8px}h1{font:600 24px/1.2 "Hiragino Mincho ProN",YuMincho,serif;letter-spacing:.10em;white-space:nowrap;color:#f3ddba}.resource-strip{display:flex;gap:7px;color:#c5ccd2;font-size:12px;margin-right:auto}.resource-strip span{border-left:1px solid #6e79844d;padding-left:9px}.header-nav{display:flex;gap:5px;margin-left:auto}.header-nav button{min-height:36px;padding:6px 13px;background:transparent;border-color:transparent;font-size:13px}.header-nav button.active{border-color:#8e785a;background:#a5824020}.utility{display:flex;gap:4px}.utility button{min-height:36px;padding:6px 9px;font-size:12px;background:#0d141d;border-color:#333f4c}
+.home-shell{display:grid;grid-template-columns:minmax(0,1fr) clamp(290px,27vw,390px);grid-template-rows:minmax(0,1fr) 84px;gap:12px;min-height:0}.home-stage{min-width:0;min-height:0;display:grid;grid-template-rows:minmax(0,1fr) 66px;border:1px solid #46505c;border-radius:16px;overflow:hidden;background:#0c1520;box-shadow:0 16px 45px #0005}.kennel-scene{position:relative;min-height:0;overflow:hidden;background:radial-gradient(ellipse,#263546,#0b1522)}#homeScene{display:block;position:absolute;inset:0;width:100%;height:100%}.base-name{position:absolute;left:22px;top:17px;color:#c8c8be;font-size:13px;letter-spacing:.15em;text-shadow:0 2px 8px #000}.companion-plates{position:absolute;bottom:18px;left:5%;right:5%;display:grid;grid-template-columns:1fr 1fr;gap:12px;pointer-events:none}.companion-plate{padding:10px 15px;background:linear-gradient(100deg,#0a121ddd,#15213288);border-left:2px solid #d5b27a;border-radius:4px;max-width:260px}.companion-plate:last-child{justify-self:end;text-align:right;border-left:0;border-right:2px solid #a588d4}.companion-plate b{font-size:15px;color:#f0d7ac}.companion-plate:last-child b{color:#c9b4e9}.companion-plate small{display:block;color:#b1bcc9;font-size:11px}.journey-track{display:grid;grid-template-columns:repeat(4,1fr);align-items:center;padding:6px 12px;gap:6px;background:#111b26}.journey-node{position:relative;display:flex;align-items:center;gap:8px;color:#6d7f90;font-size:11px;min-width:0}.journey-node i{font-style:normal;display:grid;place-items:center;flex:0 0 24px;height:24px;border:1px solid #526071;border-radius:50%;background:#15202b}.journey-node.current{color:#f2d4a2}.journey-node.current i{border-color:#d4ad6c;box-shadow:0 0 16px #eab65722}.journey-node.complete{color:#aeac91}.journey-node.complete i{color:#eed3a3;border-color:#807558}.journey-node span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.story-panel{display:flex;flex-direction:column;gap:14px;border:1px solid #5d5546;border-radius:16px;padding:clamp(17px,2vw,28px);background:radial-gradient(ellipse at 100% 0,#5e49352f,transparent 70%),linear-gradient(145deg,#1b2530,#101922);min-height:0}.chapter-meta{display:flex;justify-content:space-between;color:#a69c88;font-size:12px;letter-spacing:.08em}.story-panel h2{font:500 clamp(24px,2.5vw,34px)/1.25 "Hiragino Mincho ProN",YuMincho,serif;color:#f2ddba}.story-copy{color:#b1b9c1;font-size:13px;line-height:1.9}.story-current{margin-top:auto;border-top:1px solid #9e8d633d;padding-top:17px}.story-current small{color:#9fabb7;font-size:11px}.story-current h3{font-size:18px;margin:4px 0 8px;color:#eee2c9}.story-current p{font-size:13px;color:#bac3cd;line-height:1.7}#homeGo{width:100%;min-height:48px;letter-spacing:.07em}.home-facilities{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.facility{display:flex;align-items:center;gap:14px;text-align:left;background:linear-gradient(130deg,#1b2733,#121d29);border:1px solid #3c4a57;padding:12px 18px}.facility-symbol{font-size:25px;color:#c7b18b;width:36px;text-align:center}.facility strong{display:block;font-size:16px;color:#dfd0b5}.facility small{display:block;color:#8d9ba9;font-size:11px}.facility:disabled{opacity:.55}.facility:disabled .facility-symbol{color:#657180}
+.battle-shell{display:grid;grid-template-columns:minmax(0,1fr) clamp(260px,25vw,350px);gap:10px;min-height:0}.battle-stage{display:grid;grid-template-rows:48px minmax(0,1fr) 76px;gap:8px;min-height:0;min-width:0}.battle-top{padding:0 8px;display:flex;flex-direction:column;justify-content:center;position:relative}.battle-heading{display:flex;align-items:baseline;justify-content:space-between;gap:10px}.battle-heading strong{font-size:17px;color:#ead1aa}#round{color:#a4b0bd;font-size:11px}.goal{font-size:12px;color:#c5c3b3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.stage-weather{font-size:10px;color:#b8a487;margin-left:10px}.mapviewport{position:relative;min-height:0;min-width:0;border:1px solid #41515e;border-radius:14px;background:#080f1b;overflow:hidden}.mapviewport canvas{position:absolute;inset:0;display:block;width:100%;height:100%;touch-action:none;box-shadow:none;border:0;border-radius:0}#battleFx{pointer-events:none;background:transparent}.under{display:grid;grid-template-columns:1fr 1fr;gap:8px;min-height:0}.status{background:linear-gradient(120deg,#202a34,#101a24);border:1px solid #4b4a42;border-radius:10px;padding:8px 12px;min-width:0}.status:last-child{border-color:#50465f}.status .status-top{display:flex;align-items:center;justify-content:space-between;gap:5px;font-size:12px}.status .status-top b{color:#f0d29d}.status:last-child .status-top b{color:#c8afea}.status .bar{height:4px;margin:6px 0;background:#35414b;border-radius:4px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,#a76f4a,#efca83);transition:width .25s}.status:last-child .bar i{background:linear-gradient(90deg,#684888,#b392d4)}.stat-values{display:flex;gap:10px;font-size:11px;white-space:nowrap;color:#c1cbd5}.stat-values strong{color:#f4ead8;font-weight:600}.stat-values .buff{color:#edc87a}.stat-values .debuff{color:#d98683}.combat-console{display:flex;flex-direction:column;gap:9px;min-height:0;background:linear-gradient(135deg,#202a35,#111a25);border:1px solid #48505b;border-radius:14px;padding:15px}.section-head h2{font-size:18px}.tag{font-size:11px;border:1px solid #6c6657;border-radius:5px;padding:3px 7px;color:#e6cc9a;white-space:nowrap}.turn-steps{display:flex;gap:6px}.turn-steps span{flex:1;padding:6px 9px;background:#101a26;border:1px solid #33414d;border-radius:6px;color:#758696;font-size:11px}.turn-steps .current{color:#f5d599;border-color:#a88c5c;background:#493c27}.hint{font-size:12px;min-height:34px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.actions button{min-height:70px;text-align:left;padding:9px;min-width:0}.skill-icon{float:left;display:grid;place-items:center;width:27px;height:29px;border:1px solid #a58a60;border-radius:6px;color:#eed2a1;font-size:18px;margin-right:7px;background:#111a25}.skill-title{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.actions small{display:block;font-size:10px;color:#9fb0c1;clear:both;margin-top:5px}.actions button.active small{color:#cfbc9a}.control-footer{display:flex;gap:6px}.control-footer #pass{flex:1;font-size:12px}.control-footer #restart{padding:5px 10px;font-size:11px}.terrain-panel{margin-top:auto;background:#0c1622;border:1px solid #344351;border-radius:10px;padding:12px}.terrain-panel h3{font-size:12px;color:#a7b7c8;margin-bottom:5px}.terrain-panel p{font-size:12px;color:#c0c9d3}.light-meter{display:flex;gap:4px;margin:7px 0}.light-meter i{height:5px;flex:1;border-radius:2px;background:#2d3542}.light-meter .on{background:linear-gradient(90deg,#75618f,#e5bd7b)}#tilePreview{font-size:11px;color:#a7b8cb;min-height:32px;margin-top:7px}.last-log{font-size:11px;color:#9baab8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-top:1px solid #54606c44;padding-top:8px}.action-cue{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);border:1px solid #d4b77b88;border-radius:25px;background:#142034e8;color:#ffe1a3;box-shadow:0 5px 30px #0008;padding:8px 17px;pointer-events:none;font-size:12px;white-space:nowrap}.banner{position:absolute;inset:0;background:#2e2c20;z-index:2;border-radius:8px;display:flex;align-items:center;justify-content:space-between;padding:6px 12px;color:#f5d694;font-size:12px}.banner button{min-height:30px;padding:3px 10px;font-size:11px}
+.base-shell{display:grid;grid-template-rows:46px minmax(0,1fr);gap:12px;min-height:0}.base-tabs{display:flex;gap:8px}.base-tabs button{flex:1;max-width:220px}.base-content{min-height:0;overflow:auto;overscroll-behavior:contain;padding:4px}.mission-list{display:grid;grid-template-columns:1fr 1fr;gap:12px}.mission{border:1px solid #485461;border-radius:12px;padding:17px;background:linear-gradient(135deg,#202c38,#111c28);min-width:0}.mission b{color:#edd6ad}.mission p{color:#9eafbf;font-size:12px;margin:9px 0}.mission small{font-size:11px;color:#98a7b6}.mission.locked{opacity:.5}.mission .between button{flex-shrink:0}.training,.craft-grid,.altar-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.training .mission,.craft-grid .mission,.altar-grid .mission{padding:22px}.training .row button{flex:1;font-size:12px;min-height:50px}.materials-line{padding:0 2px 14px;color:#d4c1a3;font-size:13px}.facility-note{margin:14px 3px;color:#94a6b8;font-size:12px}.attune-choices{display:flex;gap:8px}.attune-choices button{flex:1;min-height:70px;font-size:13px}.attune-choices small{display:block;color:#aab5c5;margin-top:4px}
+.result-shell{height:100%;width:min(100%,1080px);margin:0 auto;min-height:0}.result-card{height:100%;display:flex;flex-direction:column;gap:clamp(6px,1.4vh,16px);padding:clamp(14px,2.6vh,30px) clamp(16px,3vw,38px);border:1px solid #8f7b58;border-radius:18px;background:radial-gradient(ellipse at 50% 0,#6753323b,transparent 60%),linear-gradient(140deg,#1b2635,#0c1725);overflow:auto}.result-heading{text-align:center}.result-seal{font-size:28px;color:#f1cb80}.result-heading h2{font-size:28px;letter-spacing:.08em;color:#f6d59b;outline:none}.result-heading p{font-size:12px;color:#aebac8;margin:5px 0}.result-summary{display:flex;justify-content:center;gap:8px}.result-summary span{font-size:11px;color:#b3c1d1;border:1px solid #43536a;border-radius:15px;padding:3px 10px}.result-body{display:grid;grid-template-columns:1fr 1fr;gap:18px}.result-label{font-size:11px;color:#bfa97f;margin-bottom:8px}.reward-grid,.result-dogs{display:grid;grid-template-columns:1fr 1fr;gap:8px}.reward-item,.result-dog{border:1px solid #665a40;border-radius:10px;padding:12px;background:#172333}.result-dog.shadow{border-color:#65517e}.reward-item{display:flex;align-items:center;gap:8px}.reward-icon{font-size:22px;color:#edc77b}.reward-item strong{font-size:19px;display:block;color:#f0d6a0}.reward-item small{font-size:10px;color:#aeb9c9}.result-dog b{font-size:13px;color:#f1d39b}.result-dog.shadow b{color:#c5a9ed}.result-dog p{font-size:12px;margin:8px 0 3px}.result-dog .muted{font-size:10px}.home-progress{height:5px;border-radius:5px;overflow:hidden;background:#354050}.home-progress i{display:block;height:100%;background:linear-gradient(90deg,#8265aa,#e7bf7e)}.level-up{font-size:9px;color:#ffe1a3}.result-next{margin-top:auto;border:1px solid #3c4e64;border-radius:10px;background:#0d1828;padding:12px 15px}.result-next strong{color:#e7d2aa;font-size:14px}.result-next p{font-size:11px;margin-top:4px;color:#9fadc0}.result-buttons{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:8px;margin-top:10px}.result-buttons button{font-size:13px}.result-links{display:flex;justify-content:center;gap:12px}.result-links button{min-height:28px;font-size:11px;padding:4px 10px}.failure{border-color:#79617c}.failure .result-heading h2{color:#d4b8e0}
+dialog{color:var(--ink);width:min(640px,94vw);max-height:86vh;max-height:86dvh;overflow:auto;background:#17222f;border:1px solid #627080;border-radius:16px;padding:22px;box-shadow:0 15px 80px #0009}dialog::backdrop{background:#020811bb;backdrop-filter:blur(5px)}.dialog-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.dialog-head button{min-height:34px}.settings-row{display:flex;align-items:center;gap:12px;margin:12px 0;font-size:13px}.settings-row input[type=range]{flex:1;accent-color:var(--gold)}.settings-row input[type=checkbox]{width:18px;height:18px;accent-color:var(--gold)}.rules-copy{font-size:12px;color:#b6c2d0;line-height:1.9;margin:15px 0}.rules-table{width:100%;border-collapse:collapse;font-size:12px;margin:9px 0 18px}.rules-table th,.rules-table td{text-align:center;padding:6px 4px;border-bottom:1px solid #435366}.rules-table th{color:#e6d1ac}.log{font-size:12px;line-height:1.7;color:#b6c4d8;max-height:200px;overflow:auto}.log div{border-bottom:1px solid #344252;padding:6px 0}#modelError{padding:20px;color:white;background:#5c2632}
+@media(orientation:portrait){.wrap{grid-template-rows:48px minmax(0,1fr);gap:7px;padding-left:max(8px,env(safe-area-inset-left));padding-right:max(8px,env(safe-area-inset-right))}header{gap:8px;padding-bottom:5px}h1{font-size:19px;letter-spacing:.03em}.resource-strip{display:none}.header-nav{gap:1px}.header-nav button{padding:5px 8px;font-size:12px;min-height:36px}.utility button{font-size:11px;padding:5px 7px}.utility #fullScreen{display:none}.home-shell{grid-template-columns:1fr;grid-template-rows:minmax(150px,1fr) auto 66px;gap:8px}.home-stage{grid-template-rows:minmax(0,1fr) 45px;border-radius:12px}.journey-track{padding:4px 9px;gap:5px}.journey-node{font-size:9px;gap:5px}.journey-node i{flex-basis:20px;height:20px}.base-name{left:14px;top:12px;font-size:11px}.companion-plates{bottom:12px;left:3%;right:3%;gap:7px}.companion-plate{padding:6px 10px}.companion-plate b{font-size:13px}.companion-plate small{font-size:10px}.story-panel{padding:13px 16px;gap:7px;border-radius:12px;display:grid;grid-template-columns:1fr auto}.chapter-meta,.story-panel>h2,.story-copy{grid-column:1/-1}.chapter-meta{font-size:10px}.story-panel>h2{font-size:24px}.story-copy{font-size:11px;line-height:1.6}.story-current{margin:0;padding:7px 0 0;min-width:0}.story-current h3{font-size:15px;margin:2px 0 3px}.story-current p{font-size:11px;line-height:1.6;max-width:55vw}.story-current small{font-size:10px}#homeGo{align-self:end;width:auto;min-width:110px;min-height:45px;padding:9px 12px;font-size:13px}.home-facilities{grid-column:auto;gap:6px}.facility{padding:7px 9px;gap:7px}.facility-symbol{font-size:20px;width:22px}.facility strong{font-size:13px}.facility small{font-size:9px}.battle-shell{grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) auto;gap:7px}.battle-stage{grid-template-rows:41px minmax(0,1fr) 62px;gap:5px}.battle-top{padding:0 4px}.battle-heading strong{font-size:14px}.goal{font-size:11px}.stage-weather{font-size:9px;margin-left:5px}.status{padding:6px 8px}.status .status-top{font-size:10px}.stat-values{font-size:10px;gap:8px}.status .bar{margin:4px 0}.combat-console{padding:9px 11px;display:grid;grid-template-columns:1fr auto;gap:6px;border-radius:12px}.section-head{grid-column:1/-1}.section-head h2{font-size:15px}.turn-steps{display:none}.hint{grid-column:1/-1;min-height:0;font-size:11px}.actions{grid-column:1/-1;grid-template-columns:repeat(4,1fr);gap:5px}.actions button{min-height:58px;padding:6px 5px;text-align:center}.actions .skill-icon{float:none;display:block;border:0;background:none;width:auto;height:21px;margin:0;font-size:18px;line-height:21px}.skill-title{font-size:11px}.actions small{display:none}.control-footer{grid-column:1/-1}.control-footer button{min-height:36px}.terrain-panel{grid-column:1/-1;padding:7px 9px;display:grid;grid-template-columns:auto 1fr;gap:3px 8px;align-items:center;border-radius:7px}.terrain-panel h3{font-size:10px;margin:0}.terrain-panel p{font-size:10px}.light-meter{display:none}#tilePreview{grid-column:1/-1;min-height:0;margin:0;font-size:10px}.last-log{display:none}.action-cue{font-size:10px;bottom:9px;padding:6px 12px}.mission-list,.training,.craft-grid,.altar-grid{grid-template-columns:1fr;gap:9px}.mission{padding:12px 14px}.mission p{margin:6px 0;font-size:11px}.mission b{font-size:13px}.mission .between button{min-height:38px;font-size:12px}.base-shell{grid-template-rows:42px 1fr;gap:8px}.base-tabs{gap:5px}.base-tabs button{padding:6px 5px;font-size:12px;min-height:40px}.training .mission,.craft-grid .mission,.altar-grid .mission{padding:15px}.result-body{grid-template-columns:1fr;gap:12px}.result-card{gap:12px;padding:16px 13px}.result-seal{font-size:22px}.result-heading h2{font-size:24px}.result-label{margin-bottom:5px}.result-dog,.reward-item{padding:10px}.reward-item strong{font-size:17px}.result-buttons{gap:5px}.result-buttons button{padding:9px 5px;font-size:11px}.result-next{padding:10px}.result-next p{font-size:10px}.result-next strong{font-size:12px}}
+@media(orientation:landscape) and (max-height:600px){.wrap{grid-template-rows:40px 1fr;gap:6px;padding-top:5px;padding-bottom:5px}h1{font-size:20px}.resource-strip{display:none}.header-nav button,.utility button{min-height:32px;padding:4px 9px}.home-shell{grid-template-columns:1fr 285px;grid-template-rows:1fr 62px;gap:7px}.home-stage{grid-template-rows:1fr 35px}.journey-node{font-size:9px}.story-panel{gap:5px;padding:12px 15px}.story-panel h2{font-size:23px}.chapter-meta{font-size:10px}.story-copy,.story-current p{font-size:10px;line-height:1.6}.story-current{padding-top:7px}.story-current h3{font-size:14px;margin:2px 0}.story-current small{font-size:10px}#homeGo{min-height:36px;font-size:12px}.facility{padding:7px 13px}.facility strong{font-size:13px}.facility small{font-size:10px}.battle-shell{grid-template-columns:1fr 245px;gap:7px}.battle-stage{grid-template-rows:37px 1fr 54px;gap:4px}.battle-heading strong{font-size:13px}.goal{font-size:10px}.status{padding:5px 8px}.status .status-top{font-size:10px}.stat-values{font-size:9px;gap:6px}.status .bar{margin:3px 0}.combat-console{padding:9px;gap:6px}.section-head h2{font-size:14px}.turn-steps span{padding:3px 6px;font-size:10px}.hint{font-size:10px;min-height:25px}.actions button{min-height:49px;padding:5px}.skill-title{font-size:11px}.skill-icon{width:23px;height:24px;font-size:15px;margin-right:4px}.actions small{display:none}.control-footer button{min-height:31px;font-size:10px}.terrain-panel{padding:7px}.terrain-panel h3,.terrain-panel p{font-size:10px}#tilePreview{font-size:10px;min-height:15px;margin-top:3px}.light-meter{margin:4px 0}.last-log{display:none}.result-card{padding:8px 18px;gap:5px}.result-seal{display:none}.result-heading h2{font-size:20px}.result-heading p{font-size:10px;margin:2px 0}.result-summary span{font-size:9px;padding:1px 7px}.result-label{font-size:9px;margin-bottom:4px}.reward-item,.result-dog{padding:7px}.reward-item strong{font-size:15px}.reward-item small{font-size:9px}.result-dog b{font-size:11px}.result-dog p{font-size:10px;margin:3px 0}.result-dog .small{font-size:9px}.result-next{padding:7px 11px}.result-next strong{font-size:12px}.result-next p{font-size:10px}.result-buttons{margin-top:5px}.result-buttons button{min-height:31px;padding:5px;font-size:11px}.result-links button{min-height:22px;font-size:10px;padding:1px 6px}}
+@media(orientation:portrait) and (max-height:700px){.wrap{grid-template-rows:43px 1fr;gap:5px}h1{font-size:17px}.header-nav button{font-size:11px;padding:4px 6px}.utility button{font-size:10px}.home-shell{grid-template-rows:minmax(110px,1fr) auto 58px;gap:6px}.story-panel{gap:4px;padding:9px 13px}.story-panel>h2{font-size:21px}.story-copy{font-size:10px}.story-current p{font-size:10px}.companion-plate small{display:none}.home-stage{grid-template-rows:1fr 33px}.facility-symbol{display:none}.battle-stage{grid-template-rows:36px 1fr 55px}.combat-console{padding:7px 9px;gap:4px}.actions button{min-height:51px}.hint{font-size:10px}.terrain-panel{padding:5px 8px}.control-footer button{min-height:32px}.status .status-top{font-size:9px}.stat-values{font-size:9px;gap:6px}.result-card{gap:8px;padding:10px}.result-seal{display:none}.result-heading h2{font-size:22px}.result-dog p{font-size:11px}.result-next p{font-size:10px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}.bar i{transition:none}}
+@media(orientation:landscape) and (max-height:440px){.turn-steps{display:none}.combat-console .hint{min-height:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.terrain-panel{padding:6px;margin-top:auto}.terrain-panel h3,.terrain-panel .light-meter,#tilePreview{display:none}.story-panel .story-copy{display:none}.story-panel{padding:10px 12px}.story-panel h2{font-size:20px}.story-current p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.facility-symbol{font-size:19px}.companion-plate{padding:5px 9px}.companion-plate b{font-size:12px}.companion-plate small{display:none}.home-stage{grid-template-rows:1fr 30px}.journey-node i{flex-basis:19px;height:19px}.home-shell{grid-template-rows:1fr 55px}.facility{gap:7px}.facility strong{font-size:12px}.facility small{font-size:9px}}
+
+</style>
+</head><body><div class="wrap">
+<header><h1>光と影の猟犬</h1><div id="packResources" class="resource-strip"></div><nav class="header-nav" aria-label="画面"><button id="homeTab" class="active">拠点</button><button id="battleTab">戦場</button><button id="baseTab">旅路</button></nav><div class="utility"><button id="audioToggle" aria-label="効果音を切り替える">音 ON</button><button id="preferences" aria-label="設定とルール">⚙</button><button id="fullScreen" aria-label="全画面表示">⛶</button></div></header>
+<div id="homeView" class="home-shell">
+ <div class="home-stage"><div class="kennel-scene"><canvas id="homeScene" width="1000" height="600" aria-label="宵待ちの砦にいる二匹の猟犬"></canvas><div class="base-name">宵待ちの砦</div><div id="homeDogs" class="companion-plates"></div></div><div id="journeyTrack" class="journey-track"></div></div>
+ <aside class="story-panel"><div class="chapter-meta"><span id="homeChapter"></span><span id="homeCompletion"></span></div><h2 id="homeStoryTitle"></h2><p id="homeStoryCopy" class="story-copy"></p><div class="story-current"><small id="homeAct"></small><h3 id="homeStage"></h3><p id="homeGoal"></p></div><button id="homeGo" class="primary">探索に出る ›</button></aside>
+ <div class="home-facilities"><button id="homeTrain" class="facility"><span class="facility-symbol">⚔</span><span><strong>訓練場</strong><small id="trainingUnlock"></small></span></button><button id="homeForge" class="facility"><span class="facility-symbol">⚒</span><span><strong>工房</strong><small id="forgeUnlock"></small></span></button><button id="homeAltar" class="facility"><span class="facility-symbol">◈</span><span><strong>調律の祭壇</strong><small id="altarUnlock"></small></span></button></div>
+</div>
+<div id="battleView" class="battle-shell hidden">
+ <main class="battle-stage"><div class="battle-top"><div class="battle-heading"><div><strong id="missionName"></strong><span id="environment" class="stage-weather"></span></div><span id="round"></span></div><p id="objective" class="goal"></p><div id="banner" class="banner hidden"></div></div><div id="mapViewport" class="mapviewport"><canvas id="battle" width="1400" height="800" aria-label="光と影の戦場。マスを選んで行動"></canvas><canvas id="battleFx" width="1400" height="800" aria-hidden="true"></canvas><div id="actionCue" class="action-cue hidden" role="status" aria-live="polite"></div></div><div class="under"><div id="lightStatus" class="status"></div><div id="shadowStatus" class="status"></div></div></main>
+ <aside class="combat-console"><div class="section-head"><h2 id="phaseTitle"></h2><span id="charge" class="tag"></span></div><div id="turnSteps" class="turn-steps"></div><p id="instruction" class="hint"></p><div id="actions" class="actions"></div><div class="control-footer"><button id="pass"></button><button id="restart" class="ghost">やり直す</button></div><div class="terrain-panel"><h3 id="terrainLabel">現在地の明るさ</h3><p id="terrainStats"></p><div id="lightMeter" class="light-meter"></div><p id="tilePreview"></p></div><div id="lastLog" class="last-log" aria-live="polite"></div></aside>
+</div>
+<div id="baseView" class="base-shell hidden"><nav id="baseTabs" class="base-tabs" aria-label="拠点の施設"><button data-panel="journey">旅路</button><button data-panel="training">訓練場</button><button data-panel="forge">工房</button><button data-panel="altar">調律</button></nav><div class="base-content"><div id="journeyPanel"><div id="missions" class="mission-list"></div></div><div id="trainingPanel" class="hidden"><p id="trainingMaterials" class="materials-line"></p><div id="training" class="training"></div><p class="facility-note">訓練と装備・調律は、次の出発から反映されます。</p></div><div id="forgePanel" class="hidden"><p id="forgeMaterials" class="materials-line"></p><div id="craft" class="craft-grid"></div></div><div id="altarPanel" class="hidden"><p class="materials-line">二匹の力を調律する。追撃と守護を、猟犬ごとに選べます。</p><div id="attunements" class="altar-grid"></div><p class="facility-note">変更に素材は必要ありません。次の出発から反映されます。</p></div></div></div>
+<section id="resultView" class="result-shell hidden" aria-labelledby="resultTitle"><div id="resultCard" class="result-card"><div class="result-heading"><div id="resultSeal" class="result-seal" aria-hidden="true">✦</div><h2 id="resultTitle" tabindex="-1"></h2><p id="resultMission"></p><div id="resultSummary" class="result-summary"></div></div><div class="result-body"><section id="resultRewards"><div class="result-label">獲得報酬</div><div id="resultRewardItems" class="reward-grid"></div></section><section><div class="result-label">二匹の成長</div><div id="resultDogs" class="result-dogs"></div></section></div><div class="result-next"><strong id="resultNextTitle"></strong><p id="resultNextHint"></p><div class="result-buttons"><button id="resultContinue" class="primary"></button><button id="resultTrain">育成・装備</button><button id="resultHome">拠点へ</button></div></div><div class="result-links"><button id="resultRetry" class="ghost">同じ探索に再挑戦</button><button id="resultMap" class="ghost">戦場を振り返る</button></div></div></section>
+<dialog id="preferencesDialog"><div class="dialog-head"><h2>設定・戦闘のルール</h2><button id="closePreferences" class="ghost">閉じる</button></div><label class="settings-row">効果音の音量<input id="audioVolume" type="range" min="0" max="100" value="45"><span id="volumeLabel">45%</span></label><label class="settings-row"><input id="numbers" type="checkbox">明るさの数値を表示</label><label class="settings-row"><input id="costs" type="checkbox">影の移動コストを表示</label><label class="settings-row"><input id="reduceMotion" type="checkbox">演出を控えめに</label><p class="rules-copy">猟犬は「移動 → 技」の順に行動します。現在地の明るさで攻撃・移動・防御・回避が変化します。影の猟犬は強い光に入れません。移動の予算は出発マスで決まり、技の強さは使用するマスで決まります。</p><h3>光の猟犬</h3><table class="rules-table"><thead><tr><th>明るさ</th><th>攻撃補正</th><th>移動予算</th><th>防御</th></tr></thead><tbody><tr><td>0</td><td>−1</td><td>1</td><td>0</td></tr><tr><td>1</td><td>±0</td><td>2</td><td>0</td></tr><tr><td>2</td><td>±0</td><td>3</td><td>0</td></tr><tr><td>3</td><td>＋1</td><td>3</td><td>0</td></tr><tr><td>4</td><td>＋2</td><td>4</td><td>1</td></tr></tbody></table><h3>影の猟犬</h3><table class="rules-table"><thead><tr><th>明るさ</th><th>攻撃補正</th><th>移動予算</th><th>回避</th></tr></thead><tbody><tr><td>0</td><td>＋2</td><td>5</td><td>55%</td></tr><tr><td>1</td><td>＋1</td><td>4</td><td>30%</td></tr><tr><td>2</td><td>±0</td><td>3</td><td>10%</td></tr><tr><td>3</td><td>−1</td><td>2</td><td>0%</td></tr><tr><td>4</td><td colspan="3">侵入不可</td></tr></tbody></table><p class="rules-copy">防御は受けるダメージを減らす値です。影の移動コストは、明るさ0から順に1・2・3・3。画面が縦長なら操作が下に移り、戦場の向きも変わります。</p><h3>行動の記録</h3><div id="log" class="log"></div></dialog>
+
+</div>
+<script>
+// Self-contained WebGL renderer. World positions are real 3D; game coordinates stay on a 2D grid.
+class HoundWorld {
+ constructor(canvas){
+  this.canvas=canvas;this.gl=canvas.getContext('webgl',{antialias:true,alpha:false});if(!this.gl)throw new Error('WebGLを利用できません。ChromeまたはSafariの新しいバージョンで開いてください。');
+  const g=this.gl,vs=`attribute vec3 aPos,aNormal,aColor;attribute float aEmit,aAlpha;uniform mat4 uVP;varying vec3 vPos,vNormal,vColor;varying float vEmit,vAlpha;void main(){vPos=aPos;vNormal=aNormal;vColor=aColor;vEmit=aEmit;vAlpha=aAlpha;gl_Position=uVP*vec4(aPos,1.0);}`;
+  const fs=`precision mediump float;varying vec3 vPos,vNormal,vColor;varying float vEmit,vAlpha;uniform vec3 uLights[3],uEye;uniform vec4 uBoxes[20];uniform int uBoxCount;float visibility(vec3 light){vec3 d=light-vPos;for(int i=0;i<20;i++){if(i>=uBoxCount)break;vec4 b=uBoxes[i];vec3 lo=vec3(b.x-.45,.08,b.y-.45),hi=vec3(b.x+.45,b.w,b.y+.45);vec3 safe=d+vec3(.0001);vec3 a=(lo-vPos)/safe,z=(hi-vPos)/safe;vec3 mn=min(a,z),mx=max(a,z);float start=max(max(mn.x,mn.y),mn.z),end=min(min(mx.x,mx.y),mx.z);if(end>=start&&end>.01&&start<.98&&start>.002)return .09;}return 1.0;}void main(){vec3 n=normalize(vNormal);float moon=max(dot(n,normalize(vec3(-.4,1.,.2))),0.);vec3 c=vColor*(.25+.36*moon)*vec3(.78,.86,1.12);for(int i=0;i<3;i++){vec3 d=uLights[i]-vPos;float r=length(d);float lam=max(dot(n,normalize(d)),0.);float light=3.4/(1.+r*r*.62)*visibility(uLights[i]);c+=vColor*vec3(1.45,1.02,.47)*light*(.2+.8*lam);}vec3 view=normalize(uEye-vPos);float rim=pow(1.-max(dot(n,view),0.),3.);c+=vec3(.045,.046,.08)*rim;c+=vColor*vEmit;float fog=clamp((length(uEye-vPos)-27.)*.014,0.,.3);c=mix(c,vec3(.03,.045,.10),fog);gl_FragColor=vec4(pow(max(c,vec3(0.)),vec3(.8)),vAlpha);}`;
+  const compile=(type,s)=>{let sh=g.createShader(type);g.shaderSource(sh,s);g.compileShader(sh);if(!g.getShaderParameter(sh,g.COMPILE_STATUS))throw new Error(g.getShaderInfoLog(sh));return sh};this.program=g.createProgram();g.attachShader(this.program,compile(g.VERTEX_SHADER,vs));g.attachShader(this.program,compile(g.FRAGMENT_SHADER,fs));g.linkProgram(this.program);if(!g.getProgramParameter(this.program,g.LINK_STATUS))throw new Error(g.getProgramInfoLog(this.program));
+  this.locations={};for(let n of ['aPos','aNormal','aColor','aEmit','aAlpha'])this.locations[n]=g.getAttribLocation(this.program,n);for(let n of ['uVP','uLights','uEye','uBoxes','uBoxCount'])this.locations[n]=g.getUniformLocation(this.program,n);
+  this.staticBuffer=g.createBuffer();this.dynamicBuffer=g.createBuffer();this.staticCount=0;this.boxes=[];this.lights=[];g.enable(g.DEPTH_TEST);g.enable(g.BLEND);g.blendFunc(g.SRC_ALPHA,g.ONE_MINUS_SRC_ALPHA);this.camera([10.5,18,25],[7,0,4],18);
+ }
+ camera(eye,target,width){this.eye=eye;const norm=a=>{let n=Math.hypot(...a);return a.map(v=>v/n)},cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],dot=(a,b)=>a.reduce((s,v,i)=>s+v*b[i],0);let z=norm(eye.map((v,i)=>v-target[i])),x=norm(cross([0,1,0],z)),y=cross(z,x);let view=[x[0],y[0],z[0],0,x[1],y[1],z[1],0,x[2],y[2],z[2],0,-dot(x,eye),-dot(y,eye),-dot(z,eye),1],height=width*this.canvas.height/this.canvas.width,n=.1,f=100,ortho=[2/width,0,0,0,0,2/height,0,0,0,0,-2/(f-n),0,0,0,-(f+n)/(f-n),1];this.vp=new Float32Array(16);for(let c=0;c<4;c++)for(let r=0;r<4;r++){let v=0;for(let k=0;k<4;k++)v+=ortho[k*4+r]*view[c*4+k];this.vp[c*4+r]=v}}
+ project(p){let m=this.vp,q=[0,0,0,0];for(let r=0;r<4;r++)q[r]=m[r]*p[0]+m[4+r]*p[1]+m[8+r]*p[2]+m[12+r];return {x:(q[0]/q[3]+1)/2*this.canvas.width,y:(1-q[1]/q[3])/2*this.canvas.height}}
+ pick(px,py,w,h){for(let z=h-1;z>=0;z--)for(let x=w-1;x>=0;x--){let ps=[[x,0,z],[x+1,0,z],[x+1,0,z+1],[x,0,z+1]].map(p=>this.project(p)),inside=true,sign=0;for(let i=0;i<4;i++){let a=ps[i],b=ps[(i+1)%4],v=(b.x-a.x)*(py-a.y)-(b.y-a.y)*(px-a.x);if(i===0)sign=v>=0?1:-1;if(v*sign<0)inside=false}if(inside)return {x,y:z}}return {x:-1,y:-1}}
+ static(vertices,lights,boxes){let g=this.gl;g.bindBuffer(g.ARRAY_BUFFER,this.staticBuffer);g.bufferData(g.ARRAY_BUFFER,new Float32Array(vertices),g.STATIC_DRAW);this.staticCount=vertices.length/11;this.lights=lights;this.boxes=boxes.slice(0,20)}
+ draw(dynamic){let g=this.gl;g.viewport(0,0,this.canvas.width,this.canvas.height);g.clearColor(...(this.sky??[.024,.035,.074]),1);g.clear(g.COLOR_BUFFER_BIT|g.DEPTH_BUFFER_BIT);g.useProgram(this.program);g.uniformMatrix4fv(this.locations.uVP,false,this.vp);g.uniform3fv(this.locations.uEye,this.eye);g.uniform3fv(this.locations.uLights,new Float32Array(this.lights.flat()));let boxes=Array(80).fill(0);this.boxes.forEach((b,i)=>boxes.splice(i*4,4,...b));g.uniform4fv(this.locations.uBoxes,new Float32Array(boxes));g.uniform1i(this.locations.uBoxCount,this.boxes.length);
+  const drawBuffer=(buffer,count)=>{g.bindBuffer(g.ARRAY_BUFFER,buffer);for(let [n,size,off] of [['aPos',3,0],['aNormal',3,3],['aColor',3,6],['aEmit',1,9],['aAlpha',1,10]]){let loc=this.locations[n];g.enableVertexAttribArray(loc);g.vertexAttribPointer(loc,size,g.FLOAT,false,44,off*4)}g.drawArrays(g.TRIANGLES,0,count)};drawBuffer(this.staticBuffer,this.staticCount);if(dynamic.length){g.bindBuffer(g.ARRAY_BUFFER,this.dynamicBuffer);g.bufferData(g.ARRAY_BUFFER,new Float32Array(dynamic),g.DYNAMIC_DRAW);drawBuffer(this.dynamicBuffer,dynamic.length/11)}
+ }
+}
+class MeshBuilder{
+ constructor(){this.v=[]}
+ tri(a,b,c,color,emit=0,alpha=1){let u=b.map((v,i)=>v-a[i]),z=c.map((v,i)=>v-a[i]),n=[u[1]*z[2]-u[2]*z[1],u[2]*z[0]-u[0]*z[2],u[0]*z[1]-u[1]*z[0]],l=Math.hypot(...n)||1;n=n.map(v=>v/l);for(let p of [a,b,c])this.v.push(...p,...n,...color,emit,alpha)}
+ quad(a,b,c,d,col,e=0,al=1){this.tri(a,b,c,col,e,al);this.tri(a,c,d,col,e,al)}
+ box(c,s,col,e=0){let [x,y,z]=c,[a,b,d]=s.map(v=>v/2),p=[[x-a,y-b,z-d],[x+a,y-b,z-d],[x+a,y+b,z-d],[x-a,y+b,z-d],[x-a,y-b,z+d],[x+a,y-b,z+d],[x+a,y+b,z+d],[x-a,y+b,z+d]];for(let q of [[3,7,6,2],[0,1,5,4],[0,3,2,1],[4,5,6,7],[0,4,7,3],[1,2,6,5]])this.quad(...q.map(i=>p[i]),col,e)}
+ sphere(c,s,col,segments=10,rings=6,e=0){let p=(i,j)=>{let a=i/segments*Math.PI*2,t=j/rings*Math.PI;return [c[0]+Math.cos(a)*Math.sin(t)*s[0],c[1]+Math.cos(t)*s[1],c[2]+Math.sin(a)*Math.sin(t)*s[2]]};for(let j=0;j<rings;j++)for(let i=0;i<segments;i++)this.quad(p(i,j),p(i+1,j),p(i+1,j+1),p(i,j+1),col,e)}
+ rod(a,b,r,col,e=0,r2=r){let v=b.map((q,i)=>q-a[i]),l=Math.hypot(...v);v=v.map(q=>q/l);let axis=Math.abs(v[1])<.8?[0,1,0]:[1,0,0],cross=(x,y)=>[x[1]*y[2]-x[2]*y[1],x[2]*y[0]-x[0]*y[2],x[0]*y[1]-x[1]*y[0]],u=cross(v,axis),ul=Math.hypot(...u);u=u.map(q=>q/ul);let z=cross(v,u),p=(base,i,rr)=>base.map((q,k)=>q+rr*(u[k]*Math.cos(i/8*Math.PI*2)+z[k]*Math.sin(i/8*Math.PI*2)));for(let i=0;i<8;i++){this.quad(p(a,i,r),p(a,i+1,r),p(b,i+1,r2),p(b,i,r2),col,e);this.tri(b,p(b,i,r2),p(b,i+1,r2),col,e)}}
+ ear(p,col){let [x,y,z]=p;this.tri([x-.09,y,z-.06],[x+.09,y,z-.06],[x+.025,y+.23,z],col);this.tri([x+.09,y,z-.06],[x+.04,y,z+.06],[x+.025,y+.23,z],col);this.tri([x+.04,y,z+.06],[x-.09,y,z-.06],[x+.025,y+.23,z],col)}
+ ring(x,z,color,y=.037,size=.94){let h=size/2,t=.016;this.box([x,y,z-h],[size,.012,t],color,2);this.box([x,y,z+h],[size,.012,t],color,2);this.box([x-h,y,z],[t,.012,size],color,2);this.box([x+h,y,z],[t,.012,size],color,2)}
+
+ transform(start,x,z,pose={}){let a=pose.yaw??0,c=Math.cos(a),s=Math.sin(a),b=pose.pitch??0,cb=Math.cos(b),sb=Math.sin(b),flash=pose.flash??0;for(let i=start;i<this.v.length;i+=11){let dx=this.v[i]-x,dy=this.v[i+1]-.35,dz=this.v[i+2]-z,px=dx*cb-dy*sb,py=dx*sb+dy*cb;this.v[i]=x+px*c-dz*s;this.v[i+1]=.35+py+(pose.y??0);this.v[i+2]=z+px*s+dz*c;let nx=this.v[i+3]*cb-this.v[i+4]*sb,ny=this.v[i+3]*sb+this.v[i+4]*cb,nz=this.v[i+5];this.v[i+3]=nx*c-nz*s;this.v[i+4]=ny;this.v[i+5]=nx*s+nz*c;for(let j=6;j<=8;j++)this.v[i+j]=this.v[i+j]*(1-flash)+flash;this.v[i+10]*=pose.alpha??1}}
+ hound(x,z,kind,t=0,scale=1,dim=0,pose={}){let modelStart=this.v.length;let dark=kind==='shadow',fur=dark?[.017,.019,.035]:[.83,.72,.52],light=dark?[.06,.047,.095]:[.96,.88,.69],mane=dark?[.027,.022,.06]:[.69,.54,.33],collar=dark?[.11,.04,.25]:[.03,.13,.32],eye=dark?[.62,.34,1]:[1,.64,.1],bob=Math.sin(t*1.8)*.012+(pose.walk?Math.abs(Math.sin(pose.gait))*.018:0);
+  const p=(a,b,c)=>[x+a*scale,(b+bob)*scale,z+c*scale],s=(a,b,c,col=fur,e=0)=>this.sphere(p(a,b,c),[.1*scale,.1*scale,.1*scale],col,9,5,e),ell=(a,b,c,rx,ry,rz,col=fur)=>this.sphere(p(a,b,c),[rx*scale,ry*scale,rz*scale],col,12,7);
+  // A wolf-like silhouette with chest, haunches, raised muzzle, hocks and separate paws.
+  ell(-.09,.40,0,.27,.14,.135);ell(-.27,.39,0,.13,.15,.14,mane);ell(.11,.48,0,.13,.20,.14,light);ell(.22,.61,0,.11,.13,.105,light);ell(.31,.65,0,.11,.09,.105);ell(.415,.615,0,.10,.055,.075,light);this.sphere(p(.489,.62,0),[.03*scale,.026*scale,.043*scale],dark?[.008,.008,.017]:[.065,.054,.05],8,4);
+  for(let side of [-1,1]){this.ear(p(.285,.71,side*.071),light);this.tri(p(.265,.736,side*.074-.064),p(.330,.736,side*.074-.064),p(.308,.879,side*.074-.026),dark?[.17,.09,.23]:[.39,.27,.24]);this.sphere(p(.346,.671,side*.089),[.021*scale,.012*scale,.009*scale],eye,8,4,dark?.7:.35);this.rod(p(.38,.595,side*.071),p(.468,.600,side*.058),.005*scale,dark?[.08,.06,.12]:[.20,.15,.13]);for(let rear of [false,true]){let a=rear?-.26:.13,zz=side*.1,wave=Math.sin((pose.gait??0)+(side===1?Math.PI:0)+(rear?Math.PI:0))*(pose.walk??0),swing=wave*.10,lift=Math.max(0,wave)*.065;this.rod(p(a,.36,zz),p(a+(rear?.04:-.02)+swing*.5,.20+lift*.4,zz),.042*scale,fur,0,.031*scale);this.rod(p(a+(rear?.04:-.02)+swing*.5,.20+lift*.4,zz),p(a+(rear?-.035:.02)+swing,.07+lift,zz),.028*scale,mane,0,.025*scale);ell(a+(rear?-.015:.055)+swing,.045+lift,zz,.069,.035,.038,light);for(let j of [-1,0,1])this.rod(p(a+(rear?.025:.092)+swing,.036+lift,zz+j*.016),p(a+(rear?.046:.112)+swing,.034+lift,zz+j*.016),.004*scale,dark?[.10,.08,.17]:[.33,.28,.25])}}
+
+  // Tufts around the neck and shoulders, made as faceted cones.
+  for(let side of [-1,1])for(let i=0;i<5;i++)this.rod(p(.09-i*.036,.55-i*.020,side*.10),p(-.05-i*.025,.46-i*.022,side*(.16+i*.005)),.055*scale,dark?mane:light,0,0);
+  for(let i=0;i<4;i++)this.rod(p(.06-i*.04,.58,0),p(-.025-i*.04,.66-i*.015,0),.045*scale,mane,0,0);
+  let wag=Math.sin(t*1.5)*.04;let tail=[p(-.31,.43,0),p(-.43,.51,.035+wag),p(-.47,.65,.05+wag),p(-.38,.71,.06+wag),p(-.32,.65,.045)];for(let i=0;i<tail.length-1;i++)this.rod(tail[i],tail[i+1],(.053-i*.007)*scale,i>1?light:fur,0,(.049-i*.009)*scale);
+  this.rod(p(.18,.51,0),p(.21,.55,0),.131*scale,collar,0,.125*scale);this.sphere(p(.22,.46,-.12),[.028*scale,.036*scale,.013*scale],dark?[.39,.18,.7]:[.98,.65,.17],8,5,1);
+  if(dark&&dim<=1)for(let i=0;i<3;i++){let w=Math.sin(t*1.3+i)*.035;this.rod(p(-.2-i*.07,.22+i*.12,.07+w),p(-.36-i*.04,.32+i*.13,.1+w),.026*scale,[.09,.028,.16],.4,0)}
+  this.transform(modelStart,x,z,pose);
+ }
+ lantern(x,z,portable=false){let c=[.12,.10,.10];this.box([x,.05,z],[.27,.10,.27],c);this.box([x,.44,z],[.26,.06,.26],[.34,.23,.08]);this.box([x,.16,z],[.25,.04,.25],[.34,.23,.08]);for(let a of [-1,1])for(let b of [-1,1])this.rod([x+a*.10,.17,z+b*.10],[x+a*.10,.43,z+b*.10],.012,[.18,.13,.065]);this.sphere([x,.30,z],[.075,.12,.075],[1,.60,.12],8,5,4);this.rod([x,.47,z],[x,.56,z],.05,[.25,.16,.05],0,.012);if(portable)this.ring(x,z,[.95,.57,.15],.043,.46)}
+ crate(x,z){this.box([x,.40,z],[.82,.80,.82],[.21,.13,.075]);this.box([x,.82,z],[.86,.06,.86],[.32,.21,.12]);for(let y of [.15,.67])this.box([x,y,z+.423],[.82,.06,.035],[.44,.29,.14]);for(let side of [-1,1])this.box([x+side*.36,.40,z+.44],[.065,.80,.055],[.42,.25,.13]);this.rod([x-.34,.12,z+.45],[x+.34,.70,z+.45],.027,[.49,.32,.16]);this.rod([x+.34,.12,z+.46],[x-.34,.70,z+.46],.027,[.49,.32,.16]);for(let a of [-1,1])for(let y of [.13,.71])this.sphere([x+a*.36,y,z+.48],[.023,.023,.014],[.06,.065,.09],6,3);for(let y of [.15,.66])this.box([x+.43,y,z],[.055,.065,.80],[.35,.21,.12])}
+ goblin(x,z,boss=false,pose={}){let modelStart=this.v.length;let q=boss?1.2:1,c=[.16,.25,.18];this.sphere([x,.31*q,z],[.23*q,.26*q,.17*q],c);this.sphere([x,.65*q,z],[.19*q,.17*q,.18*q],[.24,.31,.18]);for(let side of [-1,1]){this.rod([x+side*.12,.25,z],[x+side*.17,.045,z],.058,[.21,.14,.12]);this.sphere([x+side*.08,.68*q,z+.14*q],[.026,.02,.016],[1,.64,.12],6,4,2);this.ear([x+side*.15,.69*q,z],[.3,.23,.12])}this.rod([x-.27,.05,z],[x-.27,.88*q,z],.025,[.38,.29,.14]);this.rod([x-.27,.87*q,z],[x-.27,1.01*q,z],.06,[.62,.63,.54],0,0);this.ring(x,z,[.55,.12,.14],.039,.74);this.transform(modelStart,x,z,{...pose,yaw:0})}
+}
+
+(()=>{'use strict';
+// Offline sound bank: short layered envelopes, a shared limiter, no audio downloads.
+const Sfx=(()=>{
+ let ctx,master,noise,voices=new Set(),lastStep=-1000,settings={muted:false,volume:.45};
+ try{let stored=JSON.parse(localStorage.getItem('lightShadowAudio'));if(stored){settings.muted=!!stored.muted;settings.volume=Math.max(0,Math.min(1,Number(stored.volume)||0))}}catch{}
+ function persist(){try{localStorage.setItem('lightShadowAudio',JSON.stringify(settings))}catch{}}
+ function unlock(){try{let Audio=globalThis.AudioContext||globalThis.webkitAudioContext;if(!Audio)return false;if(!ctx){ctx=new Audio();master=ctx.createGain();let limiter=ctx.createDynamicsCompressor();limiter.threshold.value=-12;limiter.knee.value=12;limiter.ratio.value=8;master.connect(limiter);limiter.connect(ctx.destination);master.gain.value=settings.muted?0:settings.volume*.55;noise=ctx.createBuffer(1,ctx.sampleRate,ctx.sampleRate);let data=noise.getChannelData(0);for(let i=0;i<data.length;i++)data[i]=Math.random()*2-1}if(ctx.state==='suspended')ctx.resume().catch(()=>{});return true}catch{return false}}
+ function output(x){if(ctx.createStereoPanner){let p=ctx.createStereoPanner();p.pan.value=Math.max(-.65,Math.min(.65,(x/14-.5)*1.1));p.connect(master);return p}return master}
+ function tone(freq,duration=.15,type='sine',level=.15,delay=0,end=freq,x=7){let source=ctx.createOscillator(),gain=ctx.createGain(),t=ctx.currentTime+delay;source.type=type;source.frequency.setValueAtTime(freq,t);source.frequency.exponentialRampToValueAtTime(Math.max(20,end),t+duration);gain.gain.setValueAtTime(.0001,t);gain.gain.exponentialRampToValueAtTime(Math.max(.0002,level),t+.008);gain.gain.exponentialRampToValueAtTime(.0001,t+duration);source.connect(gain);let out=output(x);gain.connect(out);voices.add(source);source.onended=()=>{voices.delete(source);source.disconnect();gain.disconnect();if(out!==master)out.disconnect()};source.start(t);source.stop(t+duration+.015)}
+ function hiss(duration=.12,freq=1000,level=.12,delay=0,x=7){let source=ctx.createBufferSource(),filter=ctx.createBiquadFilter(),gain=ctx.createGain(),t=ctx.currentTime+delay;source.buffer=noise;filter.type='bandpass';filter.frequency.setValueAtTime(freq,t);filter.frequency.exponentialRampToValueAtTime(Math.max(50,freq*.35),t+duration);filter.Q.value=.7;gain.gain.setValueAtTime(.0001,t);gain.gain.exponentialRampToValueAtTime(level,t+.008);gain.gain.exponentialRampToValueAtTime(.0001,t+duration);source.connect(filter);filter.connect(gain);let out=output(x);gain.connect(out);voices.add(source);source.onended=()=>{voices.delete(source);source.disconnect();filter.disconnect();gain.disconnect();if(out!==master)out.disconnect()};source.start(t);source.stop(t+duration+.02)}
+ function play(name,x=7){if(settings.muted||settings.volume<=0||globalThis.document?.hidden)return;if(!ctx||ctx.state!=='running'){unlock();return}if(voices.size>48)return;
+  try{switch(name){
+   case 'ui':tone(620,.055,'sine',.07,0,790,x);break;
+   case 'invalid':tone(165,.10,'triangle',.1,0,130,x);break;
+   case 'stepLight':hiss(.045,1800,.085,0,x);tone(95,.055,'sine',.15,0,58,x);break;
+   case 'stepShadow':hiss(.07,470,.07,0,x);tone(74,.07,'sine',.09,0,47,x);break;
+   case 'swish':hiss(.16,2300,.12,0,x);break;
+   case 'darkSwish':hiss(.20,650,.15,0,x);tone(160,.16,'sine',.08,0,70,x);break;
+   case 'hit':hiss(.085,1250,.22,0,x);tone(140,.11,'triangle',.20,0,48,x);break;
+   case 'guard':tone(390,.25,'sine',.16,0,330,x);tone(790,.22,'sine',.07,.015,710,x);break;
+   case 'miss':hiss(.21,450,.12,0,x);break;
+   case 'castLight':[440,660,880].forEach((f,i)=>tone(f,.20,'sine',.09,i*.07,f*1.08,x));break;
+   case 'castShadow':tone(150,.36,'triangle',.12,0,60,x);hiss(.30,700,.09,0,x);break;
+   case 'lamp':tone(1175,.42,'sine',.12,0,1046,x);tone(1568,.30,'sine',.06,.05,1480,x);break;
+   case 'beam':hiss(.36,3500,.17,0,x);tone(520,.32,'triangle',.12,0,1040,x);tone(1568,.38,'sine',.07,.05,1568,x);break;
+   case 'veil':hiss(.44,460,.17,0,x);tone(100,.38,'sine',.18,0,38,x);break;
+   case 'block':hiss(.24,330,.28,0,x);tone(85,.28,'triangle',.22,0,32,x);break;
+   case 'defeat':tone(180,.28,'triangle',.10,.04,55,x);hiss(.25,650,.10,.03,x);break;
+   case 'pickup':[660,880,1320].forEach((f,i)=>tone(f,.19,'sine',.11,i*.07,f,x));break;
+   case 'turn':tone(330,.12,'sine',.06,0,440,x);break;
+   case 'victory':[523.25,659.25,783.99,1046.5].forEach((f,i)=>tone(f,.40,'triangle',.1,i*.12,f,x));break;
+   case 'failure':[392,329.63,261.63,196].forEach((f,i)=>tone(f,.38,'sine',.12,i*.14,f*.95,x));break;
+   case 'train':tone(440,.15,'triangle',.10,0,660,x);tone(880,.23,'sine',.11,.11,880,x);break;
+   case 'forge':hiss(.07,2200,.18,0,x);tone(1568,.4,'sine',.13,0,1175,x);tone(2349,.25,'sine',.06,.06,2349,x);break;
+  }}catch{/* Audio is optional; gameplay never depends on an audio device. */}
+ }
+ function stop(){for(let source of voices){try{source.stop()}catch{}}voices.clear()}
+ function mute(){settings.muted=!settings.muted;apply();persist();return settings.muted}
+ function volume(value){settings.volume=Math.max(0,Math.min(1,Number(value)||0));apply();persist()}
+ function apply(){if(master&&ctx)master.gain.setTargetAtTime(settings.muted?0:settings.volume*.55,ctx.currentTime,.025)}
+ return {unlock,play,stop,mute,volume,state:()=>({...settings}),step(kind,x){let now=performance.now();if(now-lastStep<105)return;lastStep=now;play(kind==='shadow'?'stepShadow':'stepLight',x)},action(type,actor,x){if(type==='move'||type==='enemyMove')return;play(type==='attack'||type==='enemyAttack'?'swish':type==='shadowAttack'?'darkSwish':type==='guard'?'guard':actor==='shadow'?'castShadow':'castLight',x)}};
+})();
+
+const W=14,H=8,S=80,canvas=document.getElementById('battle'),homeCanvas=document.getElementById('homeScene'),fx=document.getElementById('battleFx'),fxCtx=fx.getContext('2d');
+let world,homeWorld;try{world=new HoundWorld(canvas);homeWorld=new HoundWorld(homeCanvas)}catch(error){let box=document.createElement('div');box.id='modelError';box.textContent='3D画面を起動できませんでした。新しいChromeまたはSafariで開き、グラフィックスの使用が有効か確認してください。';canvas.parentElement.prepend(box);document.getElementById('homeView').classList.add('hidden');document.getElementById('battleView').classList.remove('hidden');return;}
+let lastScene=null;
+const $=id=>document.getElementById(id),at=(x,y)=>x+','+y,inB=(x,y)=>x>=0&&x<W&&y>=0&&y<H,dist=(a,b)=>Math.abs(a.x-b.x)+Math.abs(a.y-b.y);
+let fixed=[{x:2,y:1},{x:11,y:1}];
+const missions=[
+ {id:'hunt',name:'薄明の遺跡',type:'討伐',desc:'城門の魔物を倒し、都への道を開く。',reward:'経験値・金属片',blocks:[[5,1],[5,2],[8,4],[8,5],[10,5]],enemies:[{x:10,y:3,hp:5},{x:12,y:6,hp:4}]},
+ {id:'relic',name:'月影の奪取',type:'奪取',desc:'右奥の灯芯を回収し、運び手が帰還地点へ戻る。',reward:'経験値・影の結晶',blocks:[[4,2],[4,3],[7,1],[7,2],[9,4],[9,5]],enemies:[{x:11,y:3,hp:6},{x:10,y:6,hp:5}],item:{x:11,y:4}},
+ {id:'rescue',name:'灯台の救助',type:'救助',desc:'右奥の灯守を救出し、運び手が帰還地点へ戻る。',reward:'経験値・金属片',blocks:[[5,2],[5,3],[8,1],[8,5],[9,5]],enemies:[{x:9,y:3,hp:5},{x:12,y:5,hp:5}],item:{x:11,y:6}},
+ {id:'boss',name:'影喰らい',type:'ボス討伐',desc:'明滅する灯を読み、影喰らいを倒す。',reward:'大量の経験値・影の結晶',blocks:[[4,1],[4,2],[6,5],[8,2],[9,5]],enemies:[{x:11,y:4,hp:14,boss:true}]}
+];
+missions[0].lights=[{x:2,y:1,r:4},{x:11,y:1,r:4}];
+missions[1].lights=[{x:1,y:1,r:3},{x:12,y:6,r:3}];
+missions[2].lights=[{x:4,y:1,r:5},{x:11,y:3,r:5}];
+missions[3].lights=[{x:2,y:1,r:4},{x:11,y:3,r:4}];
+const fresh={cleared:[],user:1,uxp:0,materials:{metal:0,crystal:0},light:{level:1,xp:0,power:0,guard:0,gear:false},shadow:{level:1,xp:0,power:0,guard:0,gear:false},wins:0};
+let profile;try{profile=JSON.parse(localStorage.getItem('lightShadowSave'))||structuredClone(fresh)}catch{profile=structuredClone(fresh)}
+if(!profile.materials||!profile.light||!profile.shadow)profile=structuredClone(fresh);
+const save=()=>{try{localStorage.setItem('lightShadowSave',JSON.stringify(profile))}catch{}};
+let game,mode='move',hover=null,view='home',showNumbers=false,showCosts=false;
+const story={chapter:'第一章',title:'灯の消えた都',base:'宵待ちの砦',premise:'都を守る灯が消えた夜。二匹の猟犬は、奪われた灯芯を追う。',
+ acts:[
+  {mission:'hunt',title:'門を開く',text:'薄明の遺跡を占拠した魔物を倒し、都への道を開く。',after:'城門を抜けた先に、奪われた灯芯の痕跡が残されていた。',unlock:'訓練場'},
+  {mission:'relic',title:'灯芯を取り戻す',text:'夜霧に沈む回廊から灯芯を回収し、砦へ持ち帰る。',after:'灯芯を取り戻し、砦の工房に再び火が入った。灯台には、まだ帰らない灯守がいる。',unlock:'工房'},
+  {mission:'rescue',title:'灯守を救う',text:'光が満ちる灯台で灯守を探し、安全な場所まで連れ帰る。',after:'救出した灯守が、二匹の力を調律する祭壇を開いた。残るは灯を喰らう主。',unlock:'調律の祭壇'},
+  {mission:'boss',title:'都に灯を戻す',text:'明滅する戦場で影喰らいを倒し、都の灯を取り戻す。',after:'都に灯が戻った。二匹とともに歩いた道を、もう一度巡ることができる。',unlock:'再探索'}
+ ]};
+function migrateProfile(){
+ if(!Array.isArray(profile.cleared)){profile.legacyAccess=profile.wins>0||['light','shadow'].some(k=>profile[k].level>1||profile[k].power>0||profile[k].gear);profile.cleared=[]}
+ profile.cleared=profile.cleared.filter(id=>missions.some(m=>m.id===id));
+ for(let k of ['light','shadow'])if(!['fury','ward','none'].includes(profile[k].attunement))profile[k].attunement='none';
+}
+function storyStep(p=profile){let n=0;while(n<story.acts.length&&p.cleared?.includes(story.acts[n].mission))n++;return n}
+function facilityOpen(name){let level={training:1,forge:2,altar:3}[name];return !!profile.legacyAccess||storyStep()>=level}
+function questOpen(id){return !!profile.legacyAccess||missions.findIndex(m=>m.id===id)<=storyStep()}
+function nextStoryMission(){return story.acts[Math.min(3,storyStep())].mission}
+let basePanel='journey',portraitBoard=false;
+const luminanceNames=['濃い影','暗がり','薄明','明るい','強い光'];
+const affinity={
+ light:[{attack:-1,armor:0,move:1,evade:0},{attack:0,armor:0,move:2,evade:0},{attack:0,armor:0,move:3,evade:0},{attack:1,armor:0,move:3,evade:0},{attack:2,armor:1,move:4,evade:0}],
+ shadow:[{attack:2,armor:0,move:5,evade:.55},{attack:1,armor:0,move:4,evade:.30},{attack:0,armor:0,move:3,evade:.10},{attack:-1,armor:0,move:2,evade:0},{attack:-2,armor:0,move:0,evade:0}]
+};
+function statsFor(kind,field=brightness(),position=game.dogs[kind]){let p=game.loadout?.[kind]??profile[kind],level=field[position.y]?.[position.x]??0,a=affinity[kind][level];let base=2+p.power+Math.floor((p.level-1)/3)+(p.gear?1:0)+(p.attunement==='fury'?1:0);return {level,label:luminanceNames[level],attack:Math.max(1,base+a.attack),attackDelta:a.attack,armor:a.armor+(p.attunement==='ward'?1:0),move:a.move,evade:a.evade}}
+function shadowCost(level){return [1,2,3,3,Infinity][level]}
+function openBase(panel='journey'){if(busy())return;if(panel!=='journey'&&!facilityOpen({training:'training',forge:'forge',altar:'altar'}[panel])){Sfx.play('invalid');return}basePanel=panel;setView('base')}
+function launchQuest(id){if(!questOpen(id)){Sfx.play('invalid');return}init(id);game.started=true;setView('battle')}
+function readStage(){if(game.m.id==='relic')return '夜霧 · 灯の届く範囲が狭い';if(game.m.id==='rescue')return '灯台 · 強い光が広く届く';if(game.m.id==='boss')return game.round%2?'明滅 · 灯が強まるターン':'明滅 · 灯が弱まるターン';return '薄明 · 光と影の境界'}
+function fitGameViewport(){
+ if(typeof window==='undefined')return;
+ let r=$('mapViewport').getBoundingClientRect();
+ if(view==='battle'&&r.width>0&&r.height>0){let width=Math.min(1600,Math.max(720,Math.round(r.width*Math.min(window.devicePixelRatio||1,1.6)))),height=Math.round(width*r.height/r.width);if(canvas.width!==width||canvas.height!==height){canvas.width=fx.width=width;canvas.height=fx.height=height}portraitBoard=window.innerHeight>window.innerWidth&&r.width/r.height<1.25;draw()}
+ let h=homeCanvas.getBoundingClientRect();if(view==='home'&&h.width>0&&h.height>0){let width=Math.min(1600,Math.round(h.width*Math.min(window.devicePixelRatio||1,1.5))),height=Math.round(width*h.height/h.width);if(homeCanvas.width!==width||homeCanvas.height!==height){homeCanvas.width=width;homeCanvas.height=height}drawHome()}
+}
+function frameCamera(){let target=portraitBoard?[W/2,.15,H/2]:[W/2,.25,H/2+.35],eye=portraitBoard?[W/2+21,25,H/2+.7]:[W/2+3.5,18,H/2+21];world.camera(eye,target,1);let points=[];for(let x of [-.75,W+.75])for(let z of [-.8,H+.8])points.push([x,.05,z]);for(let x of [.5,W-.5])for(let z of [.5,H-.5])points.push([x,1.25,z]);for(let x of [-.53,4,9.7,W+.53])points.push([x,2.2,-.56]);for(let x of [W/2-1.2,W/2+1.2])points.push([x,-.8,H+1.6]);let needed=1;for(let point of points){let p=world.project(point);needed=Math.max(needed,Math.abs(p.x/canvas.width-.5)*2,Math.abs(p.y/canvas.height-.5)*2)}world.camera(eye,target,needed*1.035)}
+
+migrateProfile();
+function init(id='hunt'){
+ const m=missions.find(q=>q.id===id)||missions[0];fixed=m.lights.map(p=>({...p}));
+ let lightHP=8+profile.light.guard*2+Math.floor((profile.light.level-1)/2),shadowHP=7+profile.shadow.guard*2+Math.floor((profile.shadow.level-1)/2);
+ game={m,loadout:structuredClone({light:profile.light,shadow:profile.shadow}),started:false,round:1,phase:'light',step:'move',charge:1,blocks:m.blocks.map(([x,y])=>({x,y,created:false})),lamp:{x:3,y:3},effects:[],dogs:{light:{x:1,y:4,hp:lightHP,max:lightHP},shadow:{x:2,y:6,hp:shadowHP,max:shadowHP}},enemies:m.enemies.map((e,i)=>({...e,max:e.hp,id:i})),item:m.item?{...m.item,picked:false}:null,carrier:null,done:false,logs:[]};
+ mode='move';hover=null;cancelPresentation();Sfx.stop();note('クエスト開始。光の猟犬は移動したあとに技を使えます。');render();
+}
+function note(s){game.logs.unshift('第'+game.round+'ターン · '+s);game.logs=game.logs.slice(0,24)}
+function blocked(x,y){return game.blocks.some(b=>b.x===x&&b.y===y)}
+function lineClear(a,b){let x=a.x,y=a.y,dx=Math.abs(b.x-x),dy=Math.abs(b.y-y),sx=x<b.x?1:-1,sy=y<b.y?1:-1,err=dx-dy;while(x!==b.x||y!==b.y){let e=2*err;if(e>-dy){err-=dy;x+=sx}if(e<dx){err+=dx;y+=sy}if(x===b.x&&y===b.y)break;if(blocked(x,y))return false}return true}
+function brightness(){let field=Array.from({length:H},()=>Array(W).fill(0));let pulse=game.m.id==='boss'&&game.round%2===0?.75:1;let sources=[...fixed.map(p=>({...p,r:p.r*pulse})),{...game.lamp,r:(game.m.id==='relic'?3:4)*pulse}];for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+ let v=0;for(const s of sources){let d=Math.hypot(x-s.x,y-s.y)*4/s.r;if(d>4||!lineClear(s,{x,y}))continue;v=Math.max(v,d<.8?4:d<1.8?3:d<2.8?2:d<3.8?1:0)}field[y][x]=v;
+ }for(const e of game.effects)for(const c of e.cells)if(inB(c.x,c.y))field[c.y][c.x]=e.value;
+ return field}
+function active(){return game.dogs[game.phase]}
+function occupied(x,y,ignore){return Object.values(game.dogs).some(d=>d!==ignore&&d.hp>0&&d.x===x&&d.y===y)||game.enemies.some(e=>e.hp>0&&e.x===x&&e.y===y)}
+function reach(d,field){let cost=Array.from({length:H},()=>Array(W).fill(Infinity)),queue=[{x:d.x,y:d.y,c:0}],limit=statsFor(game.phase,field,d).move;cost[d.y][d.x]=0;while(queue.length){queue.sort((a,b)=>a.c-b.c);let q=queue.shift();if(q.c!==cost[q.y][q.x])continue;for(let [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]){let x=q.x+dx,y=q.y+dy;if(!inB(x,y)||blocked(x,y)||occupied(x,y,d))continue;let n=game.phase==='light'?1:shadowCost(field[y][x]);if(q.c+n<=limit&&q.c+n<cost[y][x]){cost[y][x]=q.c+n;queue.push({x,y,c:cost[y][x]})}}}return cost}
+function actionDefs(){if(!active()||game.done)return [];if(game.step==='move')return [['move',game.phase==='light'?'移動先を選ぶ':'影を駆ける','移動予算 '+statsFor(game.phase).move+'／明るさで変化','↗']];return game.phase==='light'?[['attack','噛みつく','隣接する敵に攻撃','牙'],['lamp','灯火を移す','周囲3マスへ灯火を配置','灯'],['beam','光の直線','4マスを強い光に／チャージ2','光'],['guard','防御','次の敵の攻撃を軽減','盾']]:[['attack','影の一撃','隣接する敵に攻撃','牙'],['block','遮蔽物を置く','周囲3マス／チャージ2','壁'],['veil','影の帯','4マスを濃い影に／チャージ2','影'],['guard','防御','次の敵の攻撃を軽減','盾']]}
+function valid(x,y,field){let d=active();if(!d||d.hp<=0||!inB(x,y))return false;let range=reach(d,field),e=game.enemies.find(a=>a.hp>0&&a.x===x&&a.y===y);if(game.step==='move'&&mode!=='move'||game.step==='skill'&&mode==='move')return false;
+ if(mode==='move')return range[y][x]<Infinity&&!(x===d.x&&y===d.y);
+ if(mode==='attack')return !!e&&dist(d,{x,y})===1&&(game.phase==='light'||field[y][x]<4);
+ if(mode==='lamp')return dist(d,{x,y})<=3&&!blocked(x,y)&&!occupied(x,y,d);
+ if(mode==='block')return game.charge>=2&&dist(d,{x,y})<=3&&dist(d,{x,y})>0&&!blocked(x,y)&&!occupied(x,y,d)&&!(game.item&&!game.item.picked&&game.item.x===x&&game.item.y===y);
+ if(mode==='beam'||mode==='veil')return game.charge>=2&&dist(d,{x,y})>0&&dist(d,{x,y})<=4&&(x===d.x||y===d.y);return false}
+function cellsTo(d,x,y){let cells=[],dx=Math.sign(x-d.x),dy=Math.sign(y-d.y);for(let i=1;i<=4;i++){let a={x:d.x+dx*i,y:d.y+dy*i};if(inB(a.x,a.y))cells.push(a)}return cells}
+// Presentation is driven by the same frame clock as rendering. A clip owns input
+// until its impact and recovery have finished; state changes happen exactly once.
+let clip=null,transients=[],facing={light:0,shadow:0},pendingResult=false;
+let reducedMotion=typeof matchMedia==='function'&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+const clamp01=n=>Math.max(0,Math.min(1,n)),smooth=n=>n*n*(3-2*n);
+const names={move:'移動',attack:'噛みつく',shadowAttack:'影の一撃',lamp:'灯火を移す',beam:'光の直線',veil:'影の帯',block:'遮蔽物を召喚',guard:'防御',enemyMove:'敵の移動',enemyAttack:'敵の攻撃'};
+function busy(){return !!clip||(!game?.done&&game?.phase==='enemy')}
+function progress(c=clip,now=performance.now()){return c?clamp01((now-c.start)/c.duration):0}
+function emit(type,x,y,options={}){transients.push({type,x,y,start:performance.now(),duration:700,...options});if(transients.length>100)transients.splice(0,transients.length-100)}
+function playClip(type,duration,options={},impact=()=>{},end=()=>{}){
+ if(clip)return false;
+ clip={type,duration:duration*(reducedMotion?.55:1),start:performance.now(),impactAt:.42,impacted:false,impact,end,...options};hover=null;Sfx.action(type,options.actor,options.from?.x??game.dogs[options.actor]?.x??7);
+ render();return true;
+}
+function tickAnimation(now){
+ transients=transients.filter(e=>now-e.start<e.duration);
+ let c=clip;if(!c)return;
+ let q=progress(c,now);
+ if(c.path){let pose=samplePath(c.path,q);facing[c.actor]=pose.yaw;let step=Math.floor(q*(c.path.length-1)*3);if(step!==(c.footstep??-1)&&q<1){c.footstep=step;Sfx.step(c.actor,pose.x);emit(c.actor==='shadow'?'smoke':'dust',pose.x,pose.y,{duration:450,color:c.actor==='shadow'?'#a97eff':'#f9dca2'})}}
+ if(!c.impacted&&q>=c.impactAt){c.impacted=true;c.impact();render()}
+ if(clip===c&&q>=1){clip=null;c.end();if(pendingResult&&!clip){pendingResult=false;view='result'}render()}
+}
+function cancelPresentation(){clip=null;transients=[];pendingResult=false;facing={light:0,shadow:0};canvas.style.transform='';fx.style.transform=''}
+function samplePath(path,q){let v=smooth(q)*(path.length-1),i=Math.min(path.length-2,Math.floor(v)),u=v-i,a=path[Math.max(0,i)],b=path[Math.max(1,i+1)];return {x:a.x+(b.x-a.x)*u,y:a.y+(b.y-a.y)*u,yaw:Math.atan2(b.y-a.y,b.x-a.x),distance:v}}
+function routeTo(x,y){let d=active(),f=brightness(),r=reach(d,f),cur={x,y},path=[cur];for(let n=0;(cur.x!==d.x||cur.y!==d.y)&&n<W*H;n++){
+ let v=f[cur.y][cur.x],cost=game.phase==='light'?1:v>=2?3:v===1?2:1;
+ let prev=[[1,0],[-1,0],[0,1],[0,-1]].map(([dx,dy])=>({x:cur.x+dx,y:cur.y+dy})).find(p=>inB(p.x,p.y)&&r[p.y][p.x]+cost===r[cur.y][cur.x]);if(!prev)return [];path.unshift(prev);cur=prev;
+ }return path}
+function poseFor(key,d,now=performance.now()){
+ let p={x:d.x,z:d.y,y:0,yaw:facing[key]??0,gait:0,walk:0,pitch:0,flash:0,alpha:1};
+ if(clip&&clip.actor===key){let q=progress(clip,now),a=clip;
+  if(a.path){let s=samplePath(a.path,q);p.x=s.x;p.z=s.y;p.yaw=s.yaw;p.gait=s.distance*Math.PI*3;p.walk=1;p.y=Math.abs(Math.sin(p.gait))*.025}
+  else if(a.to){let dx=a.to.x-d.x,dz=a.to.y-d.y,l=Math.hypot(dx,dz)||1;p.yaw=Math.atan2(dz,dx);
+   if(a.type==='attack'||a.type==='shadowAttack'||a.type==='enemyAttack'){
+    let lunge=q<.24?-.09*smooth(q/.24):q<.44?-.09+.43*smooth((q-.24)/.20):.34*(1-smooth((q-.44)/.56));p.x+=dx/l*lunge;p.z+=dz/l*lunge;p.y=Math.sin(q*Math.PI)*.055;p.pitch=-Math.sin(q*Math.PI)*.13;
+   }else{p.pitch=Math.sin(q*Math.PI)*.10;p.y=-Math.sin(q*Math.PI)*.025}
+  }
+ }
+ for(let e of transients)if(e.target===key){let q=clamp01((now-e.start)/e.duration);
+  if(e.type==='hit'){let recoil=Math.sin(q*Math.PI*2)*Math.exp(-q*4)*.13;p.x+=(e.dx??0)*recoil;p.z+=(e.dy??0)*recoil;p.flash=Math.max(p.flash,Math.max(0,1-q*3)*.8)}
+  if(e.type==='defeat'){p.alpha=1-q;p.y=-q*.35;p.pitch=q*.8}
+ }
+ return p;
+}
+function damageFx(target,actor,damage,color='#ffd38a'){Sfx.play(damage>0?'hit':'guard',target.x);if(target.hp<=0)Sfx.play('defeat',target.x);
+ let dx=target.x-actor.x,dy=target.y-actor.y,l=Math.hypot(dx,dy)||1;
+ let key=Object.entries(game.dogs).find(([,d])=>d===target)?.[0]??'enemy-'+target.id;
+ emit('hit',target.x,target.y,{target:key,dx:dx/l,dy:dy/l,damage,color,duration:720});
+ if(target.hp<=0)emit('defeat',target.x,target.y,{target:key,duration:650,color});
+}
+function afterPlayerAction(){if(!game.done)nextPhase()}
+function use(x,y){
+ if(game.done||busy())return;
+ let f=brightness(),d=active(),kind=game.phase,chosen=mode;
+ if(!valid(x,y,f)){Sfx.play('invalid');note('その場所には行動できません。');render();return}
+ if(chosen==='move'){
+  let path=routeTo(x,y);if(path.length<2)return;
+  playClip('move',Math.min(1000,220+180*(path.length-1)),{actor:kind,path,impactAt:1},()=>{d.x=x;d.y=y;interact();if(!game.done){game.step='skill';mode='attack';note((kind==='light'?'光':'影')+'の猟犬が移動した。次に技を選びます。')}emit('land',x,y,{color:kind==='light'?'#ffdb93':'#ae80ff',duration:400})});return;
+ }
+ let to={x,y};facing[kind]=Math.atan2(y-d.y,x-d.x);
+ let type=chosen==='attack'&&kind==='shadow'?'shadowAttack':chosen;
+ let cells=(chosen==='beam'||chosen==='veil')?cellsTo(d,x,y):[];
+ let oldLamp={...game.lamp};
+ emit('cast',d.x,d.y,{color:kind==='light'?'#ffe0a2':'#b488ff',duration:650});
+ playClip(type,chosen==='attack'?670:chosen==='lamp'?920:1000,{actor:kind,from:{x:d.x,y:d.y},to,cells,oldLamp,impactAt:chosen==='attack'?.43:.60},()=>{
+  if(chosen==='attack'){
+   let e=game.enemies.find(a=>a.hp>0&&a.x===x&&a.y===y),damage=statsFor(kind,f).attack;
+   e.hp=Math.max(0,e.hp-damage);damageFx(e,d,damage,kind==='light'?'#ffe0a2':'#c49aff');emit('slash',x,y,{from:{x:d.x,y:d.y},color:kind==='light'?'#fff0ba':'#d7b7ff',duration:340});note((e.boss?'ボス':'敵')+'へ'+damage+'ダメージ。');if(!e.hp)note('敵を倒した。');
+   if(game.enemies.every(a=>a.hp===0)&&(game.m.id==='hunt'||game.m.id==='boss'))win('敵をすべて倒した');
+  }
+  if(chosen==='lamp'){Sfx.play('lamp',x);game.lamp={x,y};emit('lightBurst',x,y,{duration:900,color:'#ffe4a2'});note('携帯光源を移した。明るさが変化した。');retreat(brightness())}
+  if(chosen==='block'){Sfx.play('block',x);game.blocks.push({x,y,created:true});game.charge-=2;emit('smoke',x,y,{duration:900,color:'#bb8bff',count:24});note('遮蔽物を置き、新たな影を作った。');retreat(brightness())}
+  if(chosen==='beam'||chosen==='veil'){
+   let light=chosen==='beam';Sfx.play(chosen,x);game.effects.push({cells,value:light?4:0,expires:game.round+1});game.charge-=2;
+   cells.forEach((p,i)=>emit(light?'lightBurst':'smoke',p.x,p.y,{duration:850,color:light?'#ffeab6':'#ae7cff',delay:i*45}));note(light?'光の直線を放った。':'濃い影の帯を作った。');retreat(brightness());
+  }
+ },afterPlayerAction);
+}
+function useGuard(){if(game.done||busy()||!active()||game.step!=='skill')return;let d=active(),kind=game.phase;playClip('guard',650,{actor:kind,to:{x:d.x+Math.cos(facing[kind]??0),y:d.y+Math.sin(facing[kind]??0)}},()=>{d.guarding=true;emit('guard',d.x,d.y,{duration:900,color:kind==='light'?'#9dd8ff':'#c8a7ff'});note((kind==='light'?'光':'影')+'の猟犬は防御した。')},afterPlayerAction)}
+function enemyTurn(){if(game.done)return;let order=game.enemies.filter(e=>e.hp>0);
+ function act(i){
+  if(game.done)return;if(i>=order.length){finishEnemyRound();return}
+  let e=order[i];if(e.hp<=0){act(i+1);return}
+  let targets=Object.values(game.dogs).filter(d=>d.hp>0).sort((a,b)=>dist(e,a)-dist(e,b));if(!targets.length){lose();return}let t=targets[0],key='enemy-'+e.id;
+  if(dist(e,t)===1){
+   playClip('enemyAttack',700,{actor:key,from:{x:e.x,y:e.y},to:{x:t.x,y:t.y}},()=>{
+    let f=brightness(),s=statsFor(t===game.dogs.light?'light':'shadow',f);
+    if(s.evade>0&&Math.random()<s.evade){Sfx.play('miss',t.x);emit('miss',t.x,t.y,{color:'#c4a2ff',duration:750});note('敵の攻撃は濃い影に紛れた猟犬を見失った。')}
+    else{let damage=Math.max(0,2+(e.boss?1:0)-s.armor-(t.guarding?1:0));t.hp=Math.max(0,t.hp-damage);damageFx(t,e,damage,'#ffa19d');if(t.guarding)emit('guard',t.x,t.y,{duration:550,color:'#a8e4ff'});note('敵の攻撃。'+(t===game.dogs.light?'光':'影')+'の猟犬が'+damage+'ダメージを受けた。')}
+    if(game.carrier&&game.dogs[game.carrier].hp===0){let dropped=game.dogs[game.carrier];game.item.x=dropped.x;game.item.y=dropped.y;game.item.picked=false;game.carrier=null;note('運び手が倒れ、対象がその場に残った。')}
+    if(game.dogs.light.hp===0&&game.dogs.shadow.hp===0)lose();
+   },()=>act(i+1));
+  }else{
+   let qs=[[1,0],[-1,0],[0,1],[0,-1]].map(([dx,dy])=>({x:e.x+dx,y:e.y+dy})).filter(q=>inB(q.x,q.y)&&!blocked(q.x,q.y)&&!occupied(q.x,q.y,e)).sort((a,b)=>dist(a,t)-dist(b,t));
+   if(qs[0]&&dist(qs[0],t)<dist(e,t)){let q=qs[0];playClip('enemyMove',430,{actor:key,path:[{x:e.x,y:e.y},q],impactAt:1},()=>{e.x=q.x;e.y=q.y},()=>act(i+1))}else act(i+1);
+  }
+ }act(0);
+}
+function finishEnemyRound(){
+ for(let d of Object.values(game.dogs))d.guarding=false;
+ game.step='move';game.round++;game.charge=Math.min(3,game.charge+1);game.effects=game.effects.filter(e=>e.expires>=game.round);retreat(brightness());game.phase=game.dogs.light.hp>0?'light':'shadow';
+ if(game.skipShadow&&game.phase==='shadow'){game.skipShadow=false;game.phase='enemy';enemyTurn();return}
+ Sfx.play('turn');note('敵の行動が終了。チャージが1回復した。'+(game.m.id==='boss'?' '+readStage():''));emit('turn',6.5,3.5,{text:(game.phase==='light'?'光':'影')+'の行動',duration:850});
+}
+function renderMotionUI(){let locked=busy();for(let id of ['homeTab','battleTab','baseTab','pass'])$(id).disabled=locked||id==='pass'&&game.done;
+ for(let b of $('actions').querySelectorAll('button'))b.disabled=b.disabled||locked;
+ $('actionCue').classList.toggle('hidden',!clip);$('actionCue').textContent=clip?(clip.actor==='light'?'✦ 光の猟犬':clip.actor==='shadow'?'◈ 影の猟犬':'敵')+' · '+(names[clip.type]??'行動中'):'';
+ if(locked)$('instruction').textContent='行動を実行中です。演出が終わると次の操作ができます。';
+ canvas.style.cursor=locked?'wait':'crosshair';
+}
+
+function retreat(field){let d=game.dogs.shadow;if(d.hp<=0||field[d.y][d.x]<4)return;let origin=game.dogs.light;let options=[];for(let y=0;y<H;y++)for(let x=0;x<W;x++)if(field[y][x]<4&&!blocked(x,y)&&!occupied(x,y,d))options.push({x,y,score:Math.abs(x-origin.x)+Math.abs(y-origin.y)});options.sort((a,b)=>a.score-b.score||a.y-b.y||a.x-b.x);if(options.length){emit('smoke',d.x,d.y,{color:'#ae7cff',duration:700,count:22});d.x=options[0].x;d.y=options[0].y;emit('smoke',d.x,d.y,{color:'#ae7cff',duration:700,count:22});note('影の猟犬は強い光から退避した。次の行動を失います。')}else note('影の猟犬は影がなく、光のそばで待機中。');game.skipShadow=true}
+function interact(){let m=game.m,d=active(),i=game.item;if(!i||!d||d.hp<=0)return;
+ if(!i.picked&&d.x===i.x&&d.y===i.y){i.picked=true;game.carrier=game.phase;Sfx.play('pickup',d.x);if(m.id==='rescue'){note('灯守を発見。帰還地点まで護衛します。')}else{note('灯芯を確保。帰還地点へ戻りましょう。')}}
+ if(i.picked&&game.carrier===game.phase&&d.x<=1){win(m.id==='rescue'?'救助成功':'灯芯を持ち帰った')}
+}
+function nextPhase(){mode='move';game.step='move';hover=null;if(game.phase==='light'){game.phase='shadow';if(game.dogs.shadow.hp<=0||game.skipShadow){game.skipShadow=false;nextPhase()}return}if(game.phase==='shadow'){game.phase='enemy';enemyTurn();return}}
+function reward(){let before=structuredClone(profile),oldStep=storyStep(),first=!profile.cleared.includes(game.m.id),boss=game.m.id==='boss',xp=boss?4:2;
+ for(let key of ['light','shadow']){let p=profile[key];p.xp+=xp;while(p.xp>=p.level*3){p.xp-=p.level*3;p.level++}}
+ profile.uxp++;if(profile.uxp>=profile.user*3){profile.uxp=0;profile.user++}let material=game.m.id==='relic'||boss?'crystal':'metal',amount=first?(boss?5:3):1;profile.materials[material]+=amount;profile.wins++;if(first)profile.cleared.push(game.m.id);let unlocked=profile.legacyAccess?[]:story.acts.slice(oldStep,storyStep()).map(a=>a.unlock);save();return {xp,material,amount,unlocked,before,after:structuredClone(profile)}}
+function finishResult(success,reason){if(game.done)return;game.done=true;game.result=success?'success':'failure';game.resultReason=reason;game.rewards=success?reward():{xp:0,amount:0,before:structuredClone(profile),after:structuredClone(profile)};note(success?reason+'！ 経験値と素材を獲得した。':'二匹とも戦闘不能。再挑戦できます。');if(clip)pendingResult=true;else view='result';mode='move';hover=null;game.resultFocusPending=true}
+function win(text){finishResult(true,text)}function lose(){finishResult(false,'二匹とも戦闘不能')}
+function syncViews(){for(let name of ['home','battle','base','result'])$(name+'View').classList.toggle('hidden',view!==name);for(let name of ['home','battle','base'])$(name+'Tab').classList.toggle('active',view===name||(name==='battle'&&view==='result'))}
+function setView(v){if(busy())return;view=v;render();fitGameViewport()}
+function renderHome(){
+ let step=storyStep(),complete=step===4,act=story.acts[Math.min(step,3)],m=missions.find(m=>m.id===act.mission),resume=game.started&&!game.done;
+ $('homeChapter').textContent=story.chapter;$('homeCompletion').textContent=step+' / 4';$('homeStoryTitle').textContent=story.title;
+ $('homeStoryCopy').textContent=step?story.acts[step-1].after:story.premise;
+ $('homeAct').textContent=resume?'探索中 · 第'+(missions.findIndex(m=>m.id===game.m.id)+1)+'節':complete?'第一章 完結':'第'+(step+1)+'節 · '+act.title;
+ $('homeStage').textContent=resume?game.m.name:complete?'灯の戻った都':m.name;$('homeGoal').textContent=resume?game.m.desc:complete?'これまでの探索を振り返り、二匹をさらに育てる。':act.text;
+ $('homeGo').textContent=resume?'探索を続ける ›':complete?'再探索へ ›':'探索に出る ›';
+ $('homeDogs').innerHTML=['light','shadow'].map(k=>{let p=profile[k];return '<div class="companion-plate"><b>'+(k==='light'?'光の猟犬':'影の猟犬')+' <span class="small">Lv.'+p.level+'</span></b><small>'+p.xp+' / '+p.level*3+' EXP'+(p.gear?' · 装備中':'')+'</small></div>'}).join('');
+ $('journeyTrack').innerHTML=story.acts.map((a,i)=>'<div class="journey-node '+(profile.cleared.includes(a.mission)?'complete':i===step?'current':'')+'"><i>'+(profile.cleared.includes(a.mission)?'✓':String(i+1).padStart(2,'0'))+'</i><span>'+a.title+'</span></div>').join('');
+ for(let [id,key,text,locked] of [['homeTrain','training','個別の能力を鍛える','第1節クリアで開放'],['homeForge','forge','素材から装備を作る','第2節クリアで開放'],['homeAltar','altar','追撃・守護を選ぶ','第3節クリアで開放']]){let open=facilityOpen(key);$(id).disabled=!open;$(key==='training'?'trainingUnlock':key+'Unlock').textContent=open?text:locked}
+ drawHome();
+}
+function drawHome(){
+ let step=storyStep();homeWorld.sky=step===4?[.075,.10,.145]:[.024,.035,.074];homeWorld.camera([3.8,5.5,8],[.1,.55,0],8);
+ let m=new MeshBuilder();m.box([0,-.27,0],[14,.46,10],[.10,.13,.17]);
+ for(let x=-5;x<=5;x++)for(let z=-3;z<=3;z++){m.box([x,.01,z],[.97,.07,.97],[.16+(x%2)*.01,.17,.20]);if((x+z)%3===0)m.rod([x-.4,.05,z-.3],[x-.1,.05,z+.15],.006,[.07,.09,.12])}
+ for(let i=0;i<36;i++){let a=i/36*Math.PI*2,b=(i+1)/36*Math.PI*2;m.rod([Math.cos(a)*2.8,.065,Math.sin(a)*1.7+.2],[Math.cos(b)*2.8,.065,Math.sin(b)*1.7+.2],.015,[.31,.27,.20],.3)}
+ for(let x of [-3.5,3.5]){m.box([x,1.2,-2],[.65,2.7,.65],[.13,.16,.21]);for(let y of [.15,1.2,2.5])m.box([x,y,-2],[.8,.13,.8],[.23,.24,.26]);for(let j=0;j<5;j++)m.sphere([x+Math.sin(j*2)*.23,.3+j*.36,-1.66],[.08,.16,.06],[.06,.13,.10],6,4)}
+ for(let x=-3;x<=3;x++)m.box([x,1.5,-2.8],[.96,2.8,.35],[.09,.13,.19]);
+ m.lantern(-2.6,-.8);if(step>=1)m.lantern(2.7,-.8);if(step>=3)m.lantern(.1,-2);
+ homeWorld.static(m.v,[[-2.6,.8,-.8],step>=1?[2.7,.8,-.8]:[7,2,-5],step>=3?[.1,.8,-2]:[-9,2,-8]],[]);
+ let dogs=new MeshBuilder();dogs.hound(-1.5,.5,'light',performance.now()/1000,2);dogs.hound(1.4,.5,'shadow',performance.now()/1000+1,2,0);homeWorld.draw(dogs.v);
+}
+function renderUI(){
+ let d=active(),f=brightness(),phase=game.phase==='light'?'光の行動':game.phase==='shadow'?'影の行動':'敵の行動';
+ $('packResources').innerHTML='<span>金属片 '+profile.materials.metal+'</span><span>影の結晶 '+profile.materials.crystal+'</span><span>調査隊 Lv.'+profile.user+'</span>';
+ $('phaseTitle').textContent=game.done?(game.result==='success'?'探索完了':'探索終了'):phase;
+ $('turnSteps').innerHTML='<span class="'+(game.step==='move'?'current':'')+'">① 移動</span><span class="'+(game.step==='skill'?'current':'')+'">② 技</span>';
+ $('missionName').textContent=game.m.name;$('round').textContent='第'+game.round+'ターン';$('charge').textContent='チャージ '+game.charge+'/3';$('environment').textContent=readStage();
+ let quest=['hunt','boss'].includes(game.m.id)?'敵をすべて倒す':game.item?.picked?'運び手を金色の帰還地点へ戻す':(game.m.id==='rescue'?'灯守':'灯芯')+'を確保する';$('objective').textContent=quest;
+ $('instruction').textContent=game.done?'探索の記録を確認できます。':game.phase==='enemy'?'敵が行動しています。':game.step==='move'?'枠のマスを選んで移動。移動せず技も使えます。':'技を選び、対象のマスを指定。';
+ $('banner').classList.toggle('hidden',!game.done);$('banner').innerHTML=game.done?'<span>'+(game.result==='success'?'探索完了':'探索終了')+'</span><button id="resultAgain">リザルトを見る ›</button>':'';if(game.done)$('resultAgain').onclick=()=>setView('result');
+ for(let k of ['light','shadow']){let dog=game.dogs[k],p=game.loadout[k],s=statsFor(k,f),correction=s.attackDelta>0?'buff':s.attackDelta<0?'debuff':'';$(k+'Status').innerHTML='<div class="status-top"><b>'+(k==='light'?'光':'影')+'の猟犬 <span>Lv.'+p.level+'</span></b><span>HP '+dog.hp+'/'+dog.max+'</span></div><div class="bar"><i style="width:'+100*dog.hp/dog.max+'%"></i></div><div class="stat-values"><span class="'+correction+'">攻 <strong>'+s.attack+'</strong></span><span>移 <strong>'+s.move+'</strong></span><span>防 <strong>'+s.armor+'</strong></span><span>避 <strong>'+Math.round(s.evade*100)+'%</strong></span><span>'+s.level+'/4</span></div>'}
+ $('actions').innerHTML='';for(let [id,name,desc,icon] of actionDefs()){let b=document.createElement('button');b.className=mode===id?'active':'';b.innerHTML='<span class="skill-icon">'+icon+'</span><b class="skill-title">'+name+'</b><small>'+desc+'</small>';b.disabled=game.done||!d||d.hp<=0||['beam','veil','block'].includes(id)&&game.charge<2;b.onclick=()=>{if(busy())return;if(id==='guard'){useGuard();return}mode=id;hover=null;render()};$('actions').append(b)}
+ $('pass').disabled=game.done;$('pass').textContent=game.step==='move'?'移動せず技を選ぶ':'技を使わず終了';$('log').innerHTML=game.logs.map(l=>'<div>'+l+'</div>').join('');$('lastLog').textContent=game.logs[0]??'';$('costs').disabled=game.done;
+ renderTerrain();if(view==='base')renderBase();updateSoundUI();
+}
+function renderTerrain(){
+ let k=game.phase==='shadow'?'shadow':'light',s=statsFor(k);$('terrainLabel').textContent=(k==='light'?'光':'影')+' · 明るさ '+s.level+'/4';$('terrainStats').textContent=s.label+' / 攻撃 '+s.attack+' · 移動 '+s.move+' · 防御 '+s.armor+' · 回避 '+Math.round(s.evade*100)+'%';$('lightMeter').innerHTML=Array.from({length:5},(_,i)=>'<i class="'+(i<=s.level?'on':'')+'"></i>').join('');
+ if(hover&&inB(hover.x,hover.y)&&!busy()&&!game.done){let field=previewField(),preview=statsFor(k,field,mode==='move'?hover:game.dogs[k]);$('tilePreview').textContent=mode==='move'?'移動先：'+preview.label+' / 攻撃 '+preview.attack+' / 次の移動 '+preview.move:'使用後：'+preview.label+' / 攻撃 '+preview.attack+' / 移動 '+preview.move}
+ else $('tilePreview').textContent=game.phase==='enemy'?'敵の攻撃も現在地の防御・回避で判定。':k==='light'?'光が強いほど、攻撃・移動が上がる。':'影が濃いほど、攻撃・移動・回避が上がる。';
+}
+function renderBase(){
+ for(let panel of ['journey','training','forge','altar'])$(panel+'Panel').classList.toggle('hidden',basePanel!==panel);
+ for(let b of $('baseTabs').querySelectorAll('button')){let panel=b.dataset.panel;b.classList.toggle('active',panel===basePanel);b.disabled=panel!=='journey'&&!facilityOpen(panel);b.onclick=()=>openBase(panel)}
+ let material='金属片 '+profile.materials.metal+' / 影の結晶 '+profile.materials.crystal;$('trainingMaterials').textContent=$('forgeMaterials').textContent=material;
+ $('missions').innerHTML='';for(let [i,m] of missions.entries()){let opened=questOpen(m.id),done=profile.cleared.includes(m.id),box=document.createElement('div');box.className='mission'+(!opened?' locked':'');box.innerHTML='<div class="between"><span><small>第'+(i+1)+'節 · '+m.type+(done?' · 達成済み':'')+'</small><br><b>'+m.name+'</b></span><button class="primary">'+(opened?'出発 ›':'未開放')+'</button></div><p>'+story.acts[i].text+'</p><small>'+(opened?'報酬：'+m.reward:'前の節をクリアすると開放')+'</small>';box.querySelector('button').disabled=!opened;box.querySelector('button').onclick=()=>launchQuest(m.id);$('missions').append(box)}
+ $('training').innerHTML='';for(let k of ['light','shadow']){let p=profile[k],box=document.createElement('div');box.className='mission';box.innerHTML='<b>'+(k==='light'?'光':'影')+'の猟犬 Lv.'+p.level+'</b><p>攻撃訓練 +'+p.power+' / 体力訓練 +'+p.guard+'</p><div class="row"><button data-kind="power">攻撃 +1<br><small>金属片 2</small></button><button data-kind="guard">最大HP +2<br><small>影の結晶 2</small></button></div>';for(let kind of ['power','guard']){let material=kind==='power'?'metal':'crystal',b=box.querySelector('[data-kind='+kind+']');b.disabled=!facilityOpen('training')||profile.materials[material]<2;b.onclick=()=>{if(!facilityOpen('training')||profile.materials[material]<2)return;profile.materials[material]-=2;p[kind]++;save();Sfx.play('train');render()}}$('training').append(box)}
+ $('craft').innerHTML='';for(let k of ['light','shadow']){let p=profile[k],material=k==='light'?'metal':'crystal',name=k==='light'?'灯火の首輪':'影織りの護符',box=document.createElement('div');box.className='mission';box.innerHTML='<b>'+name+'</b><p>'+(k==='light'?'光':'影')+'の猟犬専用 / 攻撃 +1</p><button id="craft'+(k==='light'?'Light':'Shadow')+'">'+(p.gear?'装備中':(material==='metal'?'金属片':'影の結晶')+' 3で作成')+'</button>';let b=box.querySelector('button');b.disabled=!facilityOpen('forge')||p.gear||profile.materials[material]<3;b.onclick=()=>{if(!facilityOpen('forge')||p.gear||profile.materials[material]<3)return;profile.materials[material]-=3;p.gear=true;save();Sfx.play('forge');render()};$('craft').append(box)}
+ $('attunements').innerHTML='';for(let k of ['light','shadow']){let p=profile[k],box=document.createElement('div');box.className='mission';box.innerHTML='<b>'+(k==='light'?'光':'影')+'の猟犬</b><p>現在の調律：'+(p.attunement==='fury'?'追撃':p.attunement==='ward'?'守護':'なし')+'</p><div class="attune-choices"><button data-tune="fury" class="'+(p.attunement==='fury'?'active':'')+'">追撃<small>攻撃 +1</small></button><button data-tune="ward" class="'+(p.attunement==='ward'?'active':'')+'">守護<small>防御 +1</small></button></div>';for(let tune of ['fury','ward']){let b=box.querySelector('[data-tune='+tune+']');b.disabled=!facilityOpen('altar');b.onclick=()=>{if(!facilityOpen('altar'))return;p.attunement=tune;save();Sfx.play('train');render()}}$('attunements').append(box)}
+}
+function renderResult(){
+ if(!game.done)return;let success=game.result==='success',r=game.rewards,step=storyStep(),next=missions.find(m=>m.id===nextStoryMission()),unlocked=r.unlocked??[];
+ if(!game.resultSoundPlayed){game.resultSoundPlayed=true;Sfx.play(success?'victory':'failure')}
+ $('resultCard').classList.toggle('failure',!success);$('resultSeal').textContent=success?'✦':'◇';$('resultTitle').textContent=success?'クエスト達成！':'クエスト失敗';$('resultMission').textContent=game.m.name+' · '+game.resultReason;
+ $('resultSummary').innerHTML='<span>第'+game.round+'ターン</span><span>討伐 '+game.enemies.filter(e=>e.hp===0).length+'/'+game.enemies.length+'</span><span>物語 '+step+'/4</span>';
+ $('resultRewards').classList.toggle('hidden',!success);$('resultRewardItems').innerHTML=success?'<div class="reward-item"><span class="reward-icon">✧</span><div><strong>+'+r.xp+' EXP</strong><small>各猟犬に獲得</small></div></div><div class="reward-item"><span class="reward-icon">◆</span><div><strong>'+(r.material==='metal'?'金属片':'影の結晶')+' ×'+r.amount+'</strong><small>所持数 '+r.before.materials[r.material]+' → '+r.after.materials[r.material]+'</small></div></div>':'';
+ $('resultDogs').innerHTML=['light','shadow'].map(k=>{let a=r.before[k],b=r.after[k],up=b.level>a.level;return '<div class="result-dog '+k+'"><div class="between"><b>'+(k==='light'?'光':'影')+'の猟犬</b>'+(up?'<span class="level-up">LEVEL UP</span>':'')+'</div><p>Lv.'+a.level+(up?' → '+b.level:'')+' <span class="small muted">'+(success?'EXP +'+r.xp:'減少なし')+'</span></p><div class="home-progress"><i style="width:'+100*b.xp/(b.level*3)+'%"></i></div><p class="small muted">次まで '+(b.level*3-b.xp)+' EXP</p></div>'}).join('');
+ $('resultNextTitle').textContent=success?(unlocked.length?unlocked.join('・')+'が開放された':step===4?'第一章 完結 · 都に灯が戻った':'次の目的地：'+next.name):'作戦を見直して、再挑戦。';
+ $('resultNextHint').textContent=success?(step?story.acts[step-1].after:story.premise):'報酬・育成の減少はありません。再挑戦では二匹のHPが全回復します。';
+ $('resultContinue').textContent=success?(step===4?'再探索を選ぶ ›':'物語を続ける ›'):'同じ探索に再挑戦 ›';$('resultRetry').classList.toggle('hidden',!success);
+ $('resultContinue').onclick=()=>{if(success&&step===4){openBase('journey');return}launchQuest(success?next.id:game.m.id)};
+}
+function updateSoundUI(){let s=Sfx.state();$('audioToggle').textContent=s.muted||s.volume===0?'音 OFF':'音 ON';$('audioVolume').value=Math.round(s.volume*100);$('volumeLabel').textContent=Math.round(s.volume*100)+'%'}
+function setupGameUI(){
+ $('numbers').onchange=e=>{showNumbers=e.target.checked;draw()};$('costs').onchange=e=>{showCosts=e.target.checked;draw()};$('reduceMotion').checked=reducedMotion;$('reduceMotion').onchange=e=>{reducedMotion=e.target.checked};
+ $('pass').onclick=()=>{if(game.done||busy())return;if(game.step==='move'){game.step='skill';mode='attack';note('移動せず、技の選択へ。')}else nextPhase();hover=null;render()};
+ $('restart').onclick=()=>{init(game.m.id);game.started=true};$('homeTab').onclick=()=>setView('home');$('battleTab').onclick=()=>{if(!game.done)game.started=true;setView(game.done?'result':'battle')};$('baseTab').onclick=()=>openBase('journey');
+ $('homeGo').onclick=()=>{if(game.started&&!game.done)setView('battle');else if(storyStep()===4)openBase('journey');else launchQuest(nextStoryMission())};$('homeTrain').onclick=()=>openBase('training');$('homeForge').onclick=()=>openBase('forge');$('homeAltar').onclick=()=>openBase('altar');
+ $('resultTrain').onclick=()=>openBase(facilityOpen('training')?'training':'journey');$('resultHome').onclick=()=>setView('home');$('resultRetry').onclick=()=>launchQuest(game.m.id);$('resultMap').onclick=()=>setView('battle');
+ $('audioToggle').onclick=()=>{Sfx.unlock();Sfx.mute();updateSoundUI()};$('audioVolume').oninput=e=>{Sfx.unlock();Sfx.volume(e.target.value/100);updateSoundUI()};$('audioVolume').onchange=()=>Sfx.play('ui');
+ $('preferences').onclick=()=>{updateSoundUI();$('preferencesDialog').showModal()};$('closePreferences').onclick=()=>$('preferencesDialog').close();
+ $('fullScreen').onclick=()=>{if(typeof document.documentElement?.requestFullscreen==='function'){let p=document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();p?.catch(()=>{})}};
+ if(document.addEventListener){document.addEventListener('pointerdown',()=>Sfx.unlock(),{passive:true});document.addEventListener('keydown',()=>Sfx.unlock());document.addEventListener('click',e=>{let b=e.target.closest?.('button');if(b&&!b.disabled&&b.id!=='audioToggle')Sfx.play('ui')})}
+ if(typeof window!=='undefined'){let pending=false,resize=()=>{if(pending)return;pending=true;requestAnimationFrame(()=>{pending=false;fitGameViewport()})};window.addEventListener('resize',resize);window.visualViewport?.addEventListener('resize',resize);if(typeof ResizeObserver!=='undefined'){let observer=new ResizeObserver(resize);observer.observe($('mapViewport'));observer.observe(homeCanvas)}resize()}
+}
+
+function previewField(){let f=brightness(),d=active();if(busy()||!hover||!d||game.done||!valid(hover.x,hover.y,f))return f;if(mode==='lamp'){let old=game.lamp;try{game.lamp={...hover};return brightness()}finally{game.lamp=old}}if(mode==='block'){game.blocks.push({...hover});try{return brightness()}finally{game.blocks.pop()}}if(mode==='beam'||mode==='veil'){let copy=f.map(row=>row.slice());for(let c of cellsTo(d,hover.x,hover.y))copy[c.y][c.x]=mode==='beam'?4:0;return copy}return f}
+function draw(){let original=brightness(),f=previewField(),d=active(),range=game.done||!d||d.hp<=0?null:reach(d,original),m=new MeshBuilder(),tileColors=[[.055,.055,.12],[.11,.10,.18],[.22,.18,.25],[.36,.26,.24],[.53,.37,.20]];
+ frameCamera();
+ m.box([W/2,-.50,H/2],[W+1.1,.85,H+1.1],[.095,.12,.18]);
+ for(let y=0;y<H;y++)for(let x=0;x<W;x++){let v=f[y][x],noise=.88+((x*17+y*23)%11)/55,col=tileColors[v].map(c=>c*noise);m.box([x+.5,-.025,y+.5],[.974,.105,.974],col);m.ring(x+.5,y+.5,v>2?[.22,.13,.045]:[.035,.022,.084],.032,.965);
+  // Fissures and occasional moss on individual stone slabs.
+  if((x+y)%3===0){let k=.13+(x*7+y*5)%4*.08;m.rod([x+.20,.034,y+.2],[x+.20+k,.034,y+.43],.006,[.025,.025,.046]);m.rod([x+.20+k,.034,y+.43],[x+.30+k,.034,y+.59],.004,[.025,.025,.046])}
+  if(!busy()&&!game.done&&range&&mode==='move'&&range[y][x]<Infinity&&!occupied(x,y,d)&&!(x===d.x&&y===d.y)){m.ring(x+.5,y+.5,game.phase==='light'?[.46,.28,.065]:[.29,.08,.49],.043,.91)}
+ }
+ // Battlements frame the play surface without changing the playable cell coordinates.
+ for(let x=-1;x<=W;x++){for(let z of [-.58,H+.58]){m.box([x+.5,.15,z],[.95,.63,.45],[.14,.16,.20]);for(let y of [.03,.28])for(let j=0;j<2;j++)m.box([x+.24+j*.50+(y>.1?.12:0),y,z+.24],[.47,.22,.05],[.16+(x%3)*.014,.18,.23]);if(x%2===0)m.box([x+.5,.63,z],[.60,.30,.52],[.23,.24,.26]);for(let j=0;j<2;j++){let a=x+.18+j*.31;m.sphere([a,.47,z-.18],[.10,.065,.14],[.07,.14,.11],6,3)}}}
+ for(let z=0;z<H;z++)for(let x of [-.59,W+.59])m.box([x,.25,z+.5],[.42,.79,.95],[.12,.14,.19]);
+ for(let x of [-.53,4.0,9.7,W+.53]){let z=-.56;m.box([x,1.0,z],[.73,2.0,.73],[.17,.19,.23]);for(let h of [.4,1.1,1.8])m.box([x,h,z],[.79,.10,.79],[.25,.25,.28]);m.box([x,2.05,z],[.92,.2,.92],[.25,.26,.30]);for(let i=0;i<6;i++)m.sphere([x+Math.sin(i*3)*.32,.28+i*.25,z+.34],[.12,.18,.09],[.08,.16,.12],7,4)}
+ for(let i=0;i<4;i++){m.box([W/2,-.40-i*.12,H+1+i*.33],[2.4,.12,.55],[.18,.20,.24])}
+ // Blue silhouettes of distant bridge piers.
+ for(let x of [0,3.5,7,10.5,14]){m.box([x,1.9,-4.2],[.55,4.4,.85],[.055,.075,.13]);m.box([x,3.8,-4.2],[3.6,.37,.9],[.07,.09,.16])}
+ for(let b of game.blocks)m.crate(b.x+.5,b.y+.5);
+ for(let s of fixed)m.lantern(s.x+.5,s.y+.5);
+ let lamp=mode==='lamp'&&hover&&valid(hover.x,hover.y,original)?hover:game.lamp;if(!(clip?.type==='lamp'&&!clip.impacted))m.lantern(lamp.x+.5,lamp.y+.5,true);
+ if(game.item&&!game.item.picked){let i=game.item;if(game.m.id==='rescue'){m.sphere([i.x+.5,.48,i.y+.5],[.14,.18,.13],[.42,.37,.57]);m.box([i.x+.5,.20,i.y+.5],[.24,.35,.22],[.19,.24,.34]);m.ring(i.x+.5,i.y+.5,[.30,.18,.48],.04,.7)}else{m.box([i.x+.5,.17,i.y+.5],[.38,.32,.28],[.19,.37,.34]);m.sphere([i.x+.5,.45,i.y+.5],[.09,.13,.09],[.34,.86,.78],6,4,1.2);m.ring(i.x+.5,i.y+.5,[.10,.50,.40],.04,.7)}}
+ if(game.item?.picked)for(let y=0;y<H;y++)for(let x=0;x<2;x++)m.ring(x+.5,y+.5,[.52,.31,.08],.045,.78);
+ if(d&&d.hp>0&&!game.done&&!busy())m.ring(d.x+.5,d.y+.5,game.phase==='light'?[.76,.53,.16]:[.53,.19,.88],.07,.84);
+ if(!busy()&&hover&&inB(hover.x,hover.y)&&!game.done&&valid(hover.x,hover.y,original)){m.ring(hover.x+.5,hover.y+.5,[.77,.67,.36],.06,.99);if(mode==='beam'||mode==='veil')for(let c of cellsTo(d,hover.x,hover.y))m.ring(c.x+.5,c.y+.5,mode==='beam'?[.74,.40,.08]:[.38,.06,.68],.055,.87);if(mode==='block')m.crate(hover.x+.5,hover.y+.5)}
+ lastScene={f,original,range,lamp};let boxes=game.blocks.map(b=>[b.x+.5,b.y+.5,.45,.82]);if(mode==='block'&&hover&&valid(hover.x,hover.y,original))boxes.push([hover.x+.5,hover.y+.5,.45,.82]);let sources=[...fixed,lamp].map(s=>[s.x+.5,.65,s.y+.5]);world.static(m.v,sources,boxes);drawDynamic(performance.now()/1000);renderTerrain();
+}
+function pathTo(x,y){if(!lastScene?.range)return [];let d=active(),r=lastScene.range,cur={x,y},path=[cur],count=0;while((cur.x!==d.x||cur.y!==d.y)&&count++<W*H){let v=lastScene.original[cur.y][cur.x],cost=game.phase==='light'?1:v>=2?3:v===1?2:1;let a=[[1,0],[-1,0],[0,1],[0,-1]].map(([dx,dy])=>({x:cur.x+dx,y:cur.y+dy})).filter(p=>inB(p.x,p.y)&&r[p.y][p.x]+cost===r[cur.y][cur.x]);if(!a.length)return [];cur=a[0];path.unshift(cur)}return path}
+function drawDynamic(t){if(!lastScene)return;let m=new MeshBuilder(),f=lastScene.original,now=performance.now();
+ for(let [kind,d] of Object.entries(game.dogs)){let dying=transients.some(e=>e.target===kind&&e.type==='defeat');if(d.hp<=0&&!dying)continue;let p=poseFor(kind,d,now);m.hound(p.x+.5,p.z+.5,kind,t,1,f[d.y][d.x],p);if(d.guarding&&d.hp>0)drawGuardMesh(m,p,kind,t)}
+ for(let e of game.enemies){let key='enemy-'+e.id,dying=transients.some(a=>a.target===key&&a.type==='defeat');if(e.hp>0||dying){let p=poseFor(key,e,now);m.goblin(p.x+.5,p.z+.5,e.boss,p)}}
+ drawSkillMesh(m,now,t);let lamp=presentedLamp(now);world.lights=[...fixed.map(s=>[s.x+.5,.65,s.y+.5]),[lamp.x+.5,.65+lamp.height,lamp.y+.5]];world.draw(m.v);drawOverlay(t);drawActionEffects(now);
+ let hit=transients.find(e=>e.type==='hit'&&e.damage>0&&now-e.start<160),strength=hit&&!reducedMotion?Math.sin((now-hit.start)*.14)*(1-(now-hit.start)/160)*2.2:0;
+ let transform=strength?'translate('+strength+'px,'+(-strength*.45)+'px)':'';canvas.style.transform=transform;fx.style.transform=transform;
+}
+function presentedLamp(now=performance.now()){if(clip?.type==='lamp'&&!clip.impacted){let u=clamp01(progress(clip,now)/.60);return {x:clip.oldLamp.x+(clip.to.x-clip.oldLamp.x)*u,y:clip.oldLamp.y+(clip.to.y-clip.oldLamp.y)*u,height:Math.sin(u*Math.PI)*1.1}}return {...lastScene.lamp,height:0}}
+function drawGuardMesh(m,p,kind,t){let color=kind==='light'?[.28,.58,.85]:[.42,.21,.69];for(let i=0;i<18;i++){let a=i/18*Math.PI*2,b=(i+1)/18*Math.PI*2;m.rod([p.x+.5+Math.cos(a)*.48,.20+Math.sin(t*2+i)*.015,p.z+.5+Math.sin(a)*.48],[p.x+.5+Math.cos(b)*.48,.20+Math.sin(t*2+i+1)*.015,p.z+.5+Math.sin(b)*.48],.012,color,1.8)}}
+function drawSkillMesh(m,now,t){if(!clip)return;let a=clip,q=progress(a,now),light=a.actor==='light',col=light?[1,.64,.18]:[.42,.14,.85],d=game.dogs[a.actor];
+ if(d&&!a.path&&a.type!=='attack'&&a.type!=='shadowAttack'){
+  let r=.25+Math.sin(q*Math.PI)*.4;for(let i=0;i<12;i++){let angle=i/12*Math.PI*2+t*2;m.sphere([d.x+.5+Math.cos(angle)*r,.15+q*.4,d.y+.5+Math.sin(angle)*r],[.025,.035,.025],col,5,3,2)}
+ }
+ if(a.type==='beam'||a.type==='veil'){
+  for(let [i,c] of a.cells.entries()){let k=clamp01((q-.22-i*.055)/.28);if(!k||q>.94)continue;let size=.3+Math.sin(k*Math.PI/2)*.58,height=(a.type==='beam'?1.05:.32)*Math.sin(k*Math.PI/2),x=c.x+.5,z=c.y+.5;
+   m.ring(x,z,col,.07,size);
+   if(a.type==='beam'){m.rod([x,.06,z],[x,height,z],.035,col,3,.008);for(let side of [-1,1])m.rod([x+side*.22,.08,z],[x+side*.14,height*.7,z],.012,[1,.83,.43],2,.004)}
+   else{for(let j=0;j<4;j++){let theta=t*3+j*Math.PI/2+i;m.sphere([x+Math.cos(theta)*.25,.13+Math.sin(theta+q*4)*.07,z+Math.sin(theta)*.25],[.16,.11,.13],[.12,.035,.24],6,3,.6)}}
+  }
+ }
+ if(a.type==='lamp'&&!a.impacted){let u=clamp01(q/.60),x=a.oldLamp.x+(a.to.x-a.oldLamp.x)*u,z=a.oldLamp.y+(a.to.y-a.oldLamp.y)*u,h=Math.sin(u*Math.PI)*1.1;let start=m.v.length;m.lantern(x+.5,z+.5,true);m.transform(start,x+.5,z+.5,{y:h})}
+ if(a.type==='block'&&!a.impacted){let u=clamp01((q-.15)/.45),start=m.v.length;m.crate(a.to.x+.5,a.to.y+.5);m.transform(start,a.to.x+.5,a.to.y+.5,{y:-.82*(1-smooth(u)),alpha:clamp01(u*2)})}
+}
+function drawActionEffects(now){let c=fxCtx,project=(x,y,h=0)=>world.project([x+.5,h,y+.5]);
+ const ring=(x,y,r,color,alpha=1,width=2)=>{c.globalAlpha=alpha;c.strokeStyle=color;c.lineWidth=width;c.beginPath();c.ellipse(x,y,r,r*.48,0,0,Math.PI*2);c.stroke()};
+ const glow=(x,y,r,color,alpha=1)=>{let g=c.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,color);g.addColorStop(1,color+'00');c.globalAlpha=alpha;c.fillStyle=g;c.fillRect(x-r,y-r,r*2,r*2)};
+ c.save();
+ for(let e of transients){let elapsed=now-e.start-(e.delay??0);if(elapsed<0)continue;let q=clamp01(elapsed/e.duration),fade=1-q;if(q>=1)continue;let p=project(e.x,e.y,e.type==='hit'||e.type==='miss'?.8:.05),col=e.color??'#ffdfa8';
+  if(e.type==='turn'){c.globalAlpha=Math.sin(q*Math.PI);c.fillStyle='#07101cbb';c.fillRect(fx.width/2-170,45,340,48);c.fillStyle='#fce0a9';c.font='bold 20px sans-serif';c.textAlign='center';c.fillText(e.text,fx.width/2,76);continue}
+  if(e.type==='hit'||e.type==='miss'){
+   c.globalAlpha=fade;c.textAlign='center';c.font='bold '+(e.type==='hit'?29:21)+'px sans-serif';c.lineWidth=5;c.strokeStyle='#0a0e1a';c.fillStyle=col;let text=e.type==='miss'?'MISS':e.damage===0?'GUARD':'−'+e.damage;c.strokeText(text,p.x,p.y-28-q*40);c.fillText(text,p.x,p.y-28-q*40);
+   if(e.type==='hit'&&e.damage>0)glow(p.x,p.y,30+q*25,col,Math.max(0,1-q*4)*.8);
+  }
+  if(['cast','land','lightBurst','guard','defeat'].includes(e.type)){ring(p.x,p.y,10+q*(e.type==='lightBurst'?78:42),col,fade*.8,2);if(e.type==='lightBurst'||e.type==='guard')glow(p.x,p.y-10,35+q*45,col,fade*.20)}
+  if(e.type==='slash'){
+   c.globalAlpha=fade;c.strokeStyle=col;c.lineWidth=6*fade+1;c.shadowColor=col;c.shadowBlur=16;for(let j=-1;j<=1;j++){c.beginPath();c.moveTo(p.x-24+j*11,p.y-26+q*15);c.quadraticCurveTo(p.x+j*11,p.y-15,p.x+24+j*11,p.y+12);c.stroke()}c.shadowBlur=0;
+  }
+  if(['dust','smoke','lightBurst','defeat','hit'].includes(e.type)){
+   let count=reducedMotion?5:e.count??(e.type==='dust'?6:18);
+   for(let i=0;i<count;i++){let seed=(i*97+e.x*43+e.y*29)%101/101,angle=i*2.399+e.x,speed=e.type==='dust'?18:25+seed*36,r=q*speed,xx=p.x+Math.cos(angle)*r,yy=p.y+Math.sin(angle)*r*.4-Math.sin(q*Math.PI)*(e.type==='smoke'?30:18),size=(e.type==='smoke'?6:2.7)*(1-q)*(.5+seed);c.globalAlpha=fade*(e.type==='smoke'?.30:.85);c.fillStyle=col;c.beginPath();c.arc(xx,yy,Math.max(.1,size),0,Math.PI*2);c.fill()}
+  }
+ }
+ if(clip){let a=clip,q=progress(a,now),d=game.dogs[a.actor],light=a.actor==='light',col=light?'#ffdda0':'#b78aff';
+  if((a.type==='beam'||a.type==='veil')&&q>.18){let n=clamp01((q-.18)/.55),from=project(a.from.x,a.from.y,.3),to=project(a.cells.at(-1).x,a.cells.at(-1).y,.3);c.globalAlpha=Math.sin(q*Math.PI)*.75;c.strokeStyle=col;c.lineCap='round';c.lineWidth=a.type==='beam'?9:19;c.shadowColor=col;c.shadowBlur=22;c.beginPath();c.moveTo(from.x,from.y);c.lineTo(from.x+(to.x-from.x)*n,from.y+(to.y-from.y)*n);c.stroke();c.shadowBlur=0}
+  if(d&&!a.path&&a.type!=='attack'&&a.type!=='shadowAttack'){let p=project(d.x,d.y,.05);ring(p.x,p.y,22+Math.sin(q*Math.PI)*18,col,Math.sin(q*Math.PI)*.7,2)}
+ }
+ c.restore();
+}
+
+function drawOverlay(t){let c=fxCtx;c.clearRect(0,0,fx.width,fx.height);let f=lastScene.f;
+ for(let s of [...fixed,presentedLamp()]){let p=world.project([s.x+.5,.30+(s.height??0),s.y+.5]),r=22+Math.sin(t*3+s.x)*2,g=c.createRadialGradient(p.x,p.y,2,p.x,p.y,r);g.addColorStop(0,'#fff4bde0');g.addColorStop(.17,'#ffe29384');g.addColorStop(1,'#ffd88700');c.fillStyle=g;c.fillRect(p.x-r,p.y-r,r*2,r*2)}
+ if(showNumbers||showCosts){c.font='bold '+(portraitBoard?20:12)+'px sans-serif';c.textAlign='center';for(let y=0;y<H;y++)for(let x=0;x<W;x++){if(blocked(x,y))continue;let p=world.project([x+.22,.09,y+.18]);c.fillStyle='#071020bb';c.fillRect(p.x-12,p.y-12,24,18);c.fillStyle='#fff1c9';c.fillText(showNumbers?String(f[y][x]):f[y][x]===4?'×':String(f[y][x]>=2?3:f[y][x]===1?2:1),p.x,p.y+1)}}
+ let a=active();if(hover&&a&&!game.done&&mode==='move'&&valid(hover.x,hover.y,lastScene.original)){let path=pathTo(hover.x,hover.y).map(p=>world.project([p.x+.5,.08,p.y+.5]));c.save();c.strokeStyle=game.phase==='light'?'#ffdc7b':'#ba7cff';c.lineWidth=4;c.setLineDash([10,9]);c.shadowColor=c.strokeStyle;c.shadowBlur=7;c.beginPath();path.forEach((p,i)=>i?c.lineTo(p.x,p.y):c.moveTo(p.x,p.y));c.stroke();c.restore()}
+ for(let [kind,d] of Object.entries(game.dogs))if(d.hp>0){let p=world.project([poseFor(kind,d).x+.5,1.08,poseFor(kind,d).z+.5]),col=kind==='light'?'#ffe1a0':'#b393ff';c.fillStyle='#050b18cc';c.fillRect(p.x-24,p.y-10,48,6);c.fillStyle=col;c.fillRect(p.x-24,p.y-10,48*d.hp/d.max,6);if(game.carrier===kind){c.font='bold 14px sans-serif';c.fillText('◆',p.x,p.y-20)}}
+ for(let e of game.enemies)if(e.hp>0){let p=world.project([poseFor('enemy-'+e.id,e).x+.5,e.boss?1.45:1.13,poseFor('enemy-'+e.id,e).z+.5]);c.fillStyle='#080713cc';c.fillRect(p.x-24,p.y-9,48,5);c.fillStyle='#f47777';c.fillRect(p.x-24,p.y-9,48*e.hp/e.max,5)}
+}
+
+function render(){syncViews();renderUI();renderMotionUI();if(view==='home')renderHome();if(view==='result')renderResult();draw();if(view==='result'&&game.resultFocusPending){game.resultFocusPending=false;$('resultTitle').focus()}}
+function pointer(e){let r=canvas.getBoundingClientRect();return world.pick((e.clientX-r.left)*canvas.width/r.width,(e.clientY-r.top)*canvas.height/r.height,W,H)}
+canvas.addEventListener('pointermove',e=>{if(busy())return;let p=pointer(e);if(!hover||hover.x!==p.x||hover.y!==p.y){hover=p;draw()}});canvas.addEventListener('pointerleave',()=>{hover=null;draw()});canvas.addEventListener('click',e=>{let p=pointer(e);if(inB(p.x,p.y))use(p.x,p.y)});
+setupGameUI();init(nextStoryMission());setView('home');let frameAt=0;function animate(t){tickAnimation(t);if(t-frameAt>32){frameAt=t;if(view==='battle')drawDynamic(t/1000);else if(view==='home'){let d=new MeshBuilder();d.hound(-1.5,.5,'light',t/1000,2);d.hound(1.4,.5,'shadow',t/1000+1,2,0);homeWorld.draw(d.v)}}requestAnimationFrame(animate)}requestAnimationFrame(animate);
+})();
+</script></body></html>

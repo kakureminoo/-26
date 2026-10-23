@@ -1,0 +1,15 @@
+import {test,expect} from '@playwright/test';
+import {ready} from './helpers/driver';
+const stages=[{id:'hunt',theme:'city'},{id:'forest-edge',theme:'forest'},{id:'sun-gate',theme:'sanctum'},{id:'abyss-gate',theme:'abyss'},{id:'castle-gate',theme:'castle'}];
+for(const stage of stages)test('ステージの質感と背景再利用 '+stage.theme,async({page},info)=>{
+ test.skip(info.project.name!=='desktop'&&!['city','castle'].includes(stage.theme),'各テーマの外観はPC、両端のテーマは縦横画面でも検証');test.setTimeout(90000);
+ const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',msg=>{if(msg.type()==='error'&&/shader|WebGL|VALIDATE_STATUS/i.test(msg.text()))errors.push(msg.text());});
+ await page.addInitScript(()=>localStorage.setItem('lightShadowSave',JSON.stringify({introSeen:true,legacyAccess:true,cleared:['hunt','relic','rescue','city-gate','boss','forest-edge','forest-ember','forest-keeper','forest-crossing','forest-heart','sun-gate','sun-relic','sun-rescue','sun-crossing','sun-heart','abyss-gate','abyss-relic','abyss-rescue','abyss-crossing','abyss-heart'],materials:{metal:0,crystal:0},light:{level:1,xp:0},shadow:{level:1,xp:0}})));
+ await page.goto('/');await page.locator('#titleStart').click();await page.locator('#preferences').click();await page.locator('#reduceMotion').check();await page.locator('#closePreferences').click();
+ await page.evaluate(async()=>{const {HoundWorld}=await import('/src/render/three-world.ts');const w=window as any;w.renderCalls=[];for(const method of ['draw','static','backdrop'] as const){const original=HoundWorld.prototype[method] as any;(HoundWorld.prototype as any)[method]=function(...args:any[]){const begin=performance.now();const result=original.apply(this,args);w.renderCalls.push({method,canvas:this.canvas.id,ms:performance.now()-begin,vertices:args[0].length/11});w.lastWorld=this;return result;};}});
+ await page.locator('#homeGo').click();const hidden=await page.evaluate(()=>(window as any).renderCalls.filter((c:any)=>c.canvas==='battle'||c.canvas===''));expect(hidden).toEqual([]);
+ const area=stages.indexOf(stage);await page.locator(`[data-area="${area}"]`).click();await page.locator(`[data-quest-id="${stage.id}"] button`).click();await page.locator('#questConfirm').click();await ready(page);await expect(page.locator('#mapViewport')).toHaveAttribute('data-theme',stage.theme);
+ const before=await page.evaluate(()=>{const w=window as any;return {count:w.renderCalls.filter((c:any)=>c.method==='backdrop').length,uuid:w.lastWorld.staticMesh.geometry.uuid};});expect(before.count).toBe(1);
+ const r=await page.locator('#battle').boundingBox();for(let i=0;i<5;i++)await page.mouse.move(r!.x+r!.width*(.25+i*.1),r!.y+r!.height*.5);await page.mouse.move(0,0);
+ const after=await page.evaluate(()=>{const w=window as any;return {count:w.renderCalls.filter((c:any)=>c.method==='backdrop').length,uuid:w.lastWorld.staticMesh.geometry.uuid};});expect(after).toEqual(before);await page.screenshot({path:info.outputPath(stage.theme+'.png')});expect(errors).toEqual([]);
+});

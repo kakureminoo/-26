@@ -1,0 +1,21 @@
+import {houndCatalog} from '../../src/game/roster';
+import {test,expect} from '@playwright/test';
+test('施設4個が収まり、自作モデル8体と混合召喚報酬を表示する',async({page},info)=>{
+ const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.addInitScript(()=>localStorage.setItem('lightShadowSave',JSON.stringify({introSeen:true,cleared:[],materials:{metal:0,crystal:0},light:{level:1,xp:0,power:0,guard:0},shadow:{level:1,xp:0,power:0,guard:0},roster:{version:2,stones:600,pity5:49}})));
+ await page.goto('/');await page.locator('#titleStart').click();
+ const bounds=await page.locator('.home-facilities').evaluate(el=>{const r=el.getBoundingClientRect();return [...el.querySelectorAll('button')].map(b=>{const v=b.getBoundingClientRect();return {inside:v.left>=r.left-1&&v.right<=r.right+1&&v.bottom<=r.bottom+1,overflow:b.scrollWidth>b.clientWidth+1};});});
+ expect(bounds).toHaveLength(4);expect(bounds.every(v=>v.inside&&!v.overflow)).toBe(true);
+ await page.screenshot({path:info.outputPath('home-five-facilities.png')});await page.locator('#homeRoster').click();
+ const previews=page.locator('.hound-model-preview');await expect(previews).toHaveCount(houndCatalog.length);
+ expect(await previews.evaluateAll(imgs=>imgs.every(img=>(img as HTMLImageElement).complete&&(img as HTMLImageElement).naturalWidth===480))).toBe(true);
+ expect(await previews.first().evaluate(el=>{const r=el.getBoundingClientRect();return r.height/r.width})).toBeLessThan(.72);
+ const sources=await previews.evaluateAll(imgs=>imgs.map(i=>(i as HTMLImageElement).src));expect(new Set(sources).size).toBe(8);
+ await page.screenshot({path:info.outputPath('original-roster.png')});
+ await page.locator('#closeHub').click();await page.locator('#homeSigils').click();await page.evaluate(()=>Math.random=()=>.8);
+ await page.locator('#summonOne').click();await expect(page.locator('#houndSummonResults .hound-card')).toHaveAttribute('data-rarity','1');
+ await page.locator('#summonAgain').click();await expect(page.locator('#houndSummonResults .hound-card')).toHaveAttribute('data-rarity','5');
+ await page.evaluate(()=>Math.random=()=>.1);await page.locator('#summonAgain').click();await expect(page.locator('#houndSummonResults')).toContainText('牙鉄のお守り');
+ const save=await page.evaluate(()=>JSON.parse(localStorage.getItem('lightShadowSave')!));expect(save.roster.owned).toContain('frost');expect(save.materials.metal).toBe(3);expect(save.light.ownedEquipment).toContain('fang');expect(save.shadow.ownedEquipment).toContain('fang');expect(save.roster.pity5).toBe(1);
+ expect(errors).toEqual([]);
+});

@@ -1,0 +1,18 @@
+import {describe,it,expect} from 'vitest';
+import {endlessWave,recordEndlessBest,endlessEnemyLimit} from '../src/game/endless';
+import {activities,activityUnlocked} from '../src/game/activities';
+import {migrateExpansion} from '../src/game/expansion';
+import {freshHoundCombat,recordHoundDefeat,killAttackBonus,castRally,rallyBonus} from '../src/game/hound-traits';
+import {migrateRoster,summonHounds,houndSummonPool,chooseHound} from '../src/game/roster';
+import {createMatch,applyMatchCommand,pawnStats} from '../src/game/multiplayer';
+const inventory=()=>({materials:{metal:0,crystal:0},light:{ownedEquipment:[],equipment:null},shadow:{ownedEquipment:[],equipment:null}});
+describe('無限連戦',()=>{
+ it('フェーズとともに能力・数を増やし、同時数を抑えながら1000フェーズまで生成する',()=>{let hp=0,count=0,damage=0;for(let n=1;n<=1000;n++){const wave=endlessWave(n);expect(wave.length).toBeGreaterThanOrEqual(count);expect(wave.length).toBeLessThanOrEqual(endlessEnemyLimit);expect(wave[0].hp).toBeGreaterThan(hp);expect(wave[0].damage!).toBeGreaterThanOrEqual(damage);expect(new Set(wave.map(e=>`${e.x},${e.y}`)).size).toBe(wave.length);hp=wave[0].hp;count=wave.length;damage=wave[0].damage!;}expect(endlessWave(5)[0].boss).toBe(true);});
+ it('最終ボスで解放し、自己記録のみ増加し旧データも引き継ぐ',()=>{const m=activities.find(m=>m.id==='endless')!;expect(activityUnlocked(m,25,[])).toBe(false);expect(activityUnlocked(m,0,['castle-heart'])).toBe(true);const s=migrateExpansion({shards:12,endlessBest:7});expect(recordEndlessBest(s,3)).toBe(false);expect(recordEndlessBest(s,8)).toBe(true);expect(recordEndlessBest(s,NaN)).toBe(false);expect(s.endlessBest).toBe(8);expect(s.shards).toBe(12);expect(migrateExpansion(s).endlessBest).toBe(8);expect(migrateExpansion().endlessBest).toBe(0);});
+});
+describe('追猟と鼓舞',()=>{
+ it('自分・連携の撃破だけ加算し、再カウントや味方だけの撃破を防ぐ',()=>{const s=freshHoundCombat();expect(recordHoundDefeat(s,4,0,['reaper'])).toBe(1);expect(recordHoundDefeat(s,0,0,['reaper'])).toBe(0);expect(recordHoundDefeat(s,4,1,['reaper'])).toBe(0);expect(recordHoundDefeat(s,4,0,['dawn'])).toBe(0);expect(recordHoundDefeat(s,4,0,['herald','reaper'],6)).toBe(2);expect(killAttackBonus('reaper',s)).toBe(3);expect(killAttackBonus('dusk',s)).toBe(0);expect(killAttackBonus('reaper',freshHoundCombat())).toBe(0);});
+ it('鼓舞は次のラウンド終了まで、重複は更新、6覚醒で強化する',()=>{const s=freshHoundCombat();castRally(s,1);expect(rallyBonus(s,2)).toMatchObject({attack:2,armor:1});expect(rallyBonus(s,3)).toEqual({attack:0,armor:0});castRally(s,2);castRally(s,2);expect(rallyBonus(s,3).attack).toBe(2);castRally(s,3,6);expect(rallyBonus(s,4)).toMatchObject({attack:4,armor:2});});
+ it('新猟犬をガチャ・個別編成・覚醒に統合し総レア率と天井を維持する',()=>{expect(houndSummonPool(5)).toContain('reaper');expect(houndSummonPool(4)).toContain('herald');const s=migrateRoster({version:2,stones:30});const r=summonHounds(s,1,[.008],inventory())!;expect(r[0].id).toBe('reaper');expect(r[0].rarity).toBe(5);summonHounds(s,1,[.008],inventory());expect(s.awakenings.reaper).toBe(1);expect(chooseHound(s,'reaper')).toBe(true);expect(summonHounds(s,1,[.06],inventory())![0].id).toBe('herald');});
+ it('固定レベル対戦でも支援・撃破の固有効果を使い、育成値は持ち込まない',()=>{const s=createMatch('traits','duel',[{id:'a',party:['herald','reaper']},{id:'b',party:['dawn','dusk']}]);const actor=s.pawns[0],base=pawnStats(actor,s.field);expect(applyMatchCommand(s,'a',{type:'special'}).ok).toBe(true);expect(pawnStats(actor,s.field).attack).toBe(base.attack+2);expect(pawnStats(actor,s.field).armor).toBe(base.armor+1);const t=createMatch('kills','duel',[{id:'a',party:['reaper','herald']},{id:'b',party:['dawn','dusk']}]);const a=t.pawns[0],b=t.pawns[1];a.x=3;a.y=3;b.x=4;b.y=3;b.hp=1;expect(applyMatchCommand(t,'a',{type:'attack',target:b.id}).ok).toBe(true);expect(a.killBonus).toBe(1);});
+});

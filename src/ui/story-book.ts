@@ -1,0 +1,7 @@
+import {worldStory,storyChapters} from '../game/story';
+import {campaignQuests,campaignStep} from '../game/campaign';
+const esc=(value:string)=>value.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
+export function renderStoryBook(cleared:readonly string[]):string{
+ const step=campaignStep(cleared),complete=cleared.includes('castle-heart');
+ return `<p class="story-lead">${esc(worldStory.goal)}</p><section><h3>支配が始まった日</h3><p>${esc(worldStory.world)}</p></section><div class="story-pair">${worldStory.companions.map(d=>`<section><h3>${d.name}</h3><p>${esc(d.text)}</p></section>`).join('')}</div><section><h3>要所の解放が、勝利への道</h3><p>${esc(worldStory.core)}</p></section><div class="story-chapters">${storyChapters.map((chapter,i)=>`<section><h3>${chapter.title}</h3><p>${chapter.goal}</p>${campaignQuests.filter(q=>q.area===i).every(q=>cleared.includes(q.id))?`<p class="story-revealed">${chapter.revelation}</p>`:'<small>この章の結末は、旅を進めると記録されます。</small>'}</section>`).join('')}</div><section><h3>これまでの旅</h3>${campaignQuests.filter((q,i)=>cleared.includes(q.id)||i===step).map(q=>`<details ${q===campaignQuests[step]?'open':''}><summary>${cleared.includes(q.id)?'✓':'次の目的地'} ${q.name}</summary><p>${esc(cleared.includes(q.id)?q.after:q.purpose)}</p></details>`).join('')}</section>${complete?`<section class="story-ending"><h3>奪われた光と影</h3><p>${esc(worldStory.ending)}</p></section>`:''}`;
+}

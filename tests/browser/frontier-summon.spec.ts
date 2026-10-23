@@ -1,0 +1,32 @@
+import {test,expect,type Page} from '@playwright/test';
+import {campaignQuests} from '../../src/game/campaign';
+import {ready} from './helpers/driver';
+async function setup(page:Page,legacy=false){
+ const cleared=campaignQuests.filter(q=>!legacy||[0,1,4].includes(q.area)).map(q=>q.id);
+ await page.addInitScript(cleared=>{if(!localStorage.getItem('lightShadowSave'))localStorage.setItem('lightShadowSave',JSON.stringify({cleared,introSeen:true,wins:15,user:5,uxp:0,materials:{metal:12,crystal:14},light:{level:5,xp:0,power:12,guard:20,ownedEquipment:['lantern-collar'],equipment:'lantern-collar'},shadow:{level:5,xp:0,power:12,guard:20,ownedEquipment:['shadow-weave'],equipment:'shadow-weave'},expansion:{shards:33,sigils:{aurora:1,nightwing:1},sockets:{light:{'lantern-collar':'aurora'},shadow:{'shadow-weave':'nightwing'}}}}));},cleared);
+ await page.goto('/');await page.locator('#titleStart').click();await page.locator('#preferences').click();await page.locator('#reduceMotion').check();await page.locator('#closePreferences').click();
+}
+async function depart(page:Page,id:string,area:number){await page.locator('#homeGo').click();await page.locator('[data-area="'+area+'"]').click();await page.locator('[data-quest-id="'+id+'"] button').click();await page.locator('#questConfirm').click();await ready(page);}
+async function leave(page:Page){await page.locator('#restart').click();await page.locator('#questConfirm').click();await page.locator('#resultHome').click();}
+test('5エリアを選べ、白夜と常闇で明るさが変わる',async({page},info)=>{
+ const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});await setup(page);
+ await page.locator('#homeGo').click();await expect(page.locator('[data-area]')).toHaveCount(5);await expect(page.locator('#campaignProgress')).toContainText('25 / 25');expect(await page.locator('#journeyPanel').evaluate(e=>e.scrollWidth<=e.clientWidth+1)).toBe(true);await page.screenshot({path:info.outputPath('five-areas.png'),animations:'disabled'});await page.locator('#baseBack').click();
+ await depart(page,'sun-gate',2);await expect(page.locator('#environment')).toContainText('白夜');await expect(page.locator('#lightStatus .stat-values')).toContainText('3/4');await expect(page.locator('#charge')).toHaveText('チャージ 3/3');await page.screenshot({path:info.outputPath('radiant.png'),animations:'disabled'});await leave(page);
+ await depart(page,'abyss-gate',3);await expect(page.locator('#environment')).toContainText('58%');await expect(page.locator('#lightStatus .stat-values')).toContainText('0/4');await page.screenshot({path:info.outputPath('umbral.png'),animations:'disabled'});expect(errors).toEqual([]);
+});
+test('10回召喚・重複の星屑・選択交換・伝説の開封を操作できる',async({page},info)=>{
+ await setup(page);await page.locator('#homeSigils').click();await page.locator('[data-gacha-tab="sigils"]').click();await page.evaluate(()=>Math.random=()=>0);await page.locator('#drawTenSigils').click();await expect(page.locator('.sigil-reveal-card')).toHaveCount(10);await page.locator('#skipSigilReveal').click();await expect(page.locator('#sigilRevealDialog')).toHaveClass(/revealed/);await page.locator('#closeSigilReveal').click();
+ let save=await page.evaluate(()=>JSON.parse(localStorage.getItem('lightShadowSave')!));expect(save.expansion.shards).toBe(3);expect(save.expansion.stardust).toBe(8);expect(save.expansion.draws).toBe(10);
+ await page.locator('#targetSigil').selectOption('stone');await page.locator('#exchangeSigil').click();await page.locator('#skipSigilReveal').click();await expect(page.locator('.sigil-face')).toContainText('堅石の刻印');await page.locator('#closeSigilReveal').click();
+ await page.evaluate(()=>Math.random=()=>.99);await page.locator('#drawSigil').click();await page.locator('#openSigilReveal').click();await expect(page.locator('.sigil-reveal-card')).toHaveClass(/legendary/);await expect(page.locator('.sigil-face')).toContainText('宵翼の刻印');await page.screenshot({path:info.outputPath('legendary.png'),animations:'disabled'});await page.locator('#closeSigilReveal').click();
+ save=await page.evaluate(()=>JSON.parse(localStorage.getItem('lightShadowSave')!));expect(save.expansion.sigils.stone).toBe(1);expect(save.expansion.sigils.nightwing).toBe(2);expect(save.expansion.stardust).toBe(8);expect(save.expansion.shards).toBe(0);await page.reload();await page.locator('#titleStart').click();await page.locator('#homeSigils').click();await page.locator('[data-gacha-tab="sigils"]').click();await expect(page.locator('#shardBalance')).toContainText('0');await expect(page.locator('#targetSigil')).toHaveValue('stone');
+});
+test('以前の15ステージ達成とボス再戦を引き継ぎ、モデルを表示できる',async({page},info)=>{
+ const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});await setup(page,true);await expect(page.locator('#homeCompletion')).toHaveText('15 / 25');await expect(page.locator('#homeStage')).toHaveText('白夜の入口');
+ await page.locator('[data-companion="light"]').click();await expect(page.locator('#companionCanvas')).toHaveAttribute('data-wolf-model','original');await page.waitForTimeout(250);await page.screenshot({path:info.outputPath('light-hound.png'),animations:'disabled'});await page.locator('#closeCompanion').click();await page.locator('[data-companion="shadow"]').click();await page.waitForTimeout(250);await page.screenshot({path:info.outputPath('shadow-hound.png'),animations:'disabled'});await page.locator('#closeCompanion').click();
+ await page.locator('#openStory').click();await expect(page.locator('.story-ending')).toBeVisible();await page.locator('#closeStory').click();await page.locator('#homeGo').click();await page.locator('#categoryEndgame').click();await expect(page.locator('[data-activity="rematch"] button')).toBeEnabled();await page.locator('[data-activity="rematch"] button').click();await page.locator('#questConfirm').click();await ready(page);await page.screenshot({path:info.outputPath('devourers.png'),animations:'disabled'});expect(errors).toEqual([]);
+});
+test('追加10ステージをすべて起動できる',async({page},info)=>{
+ test.skip(info.project.name!=='desktop','各盤面起動はPC、表示は別ケースで3サイズを確認');test.setTimeout(120000);await setup(page);
+ for(const q of campaignQuests.filter(q=>q.area===2||q.area===3)){await depart(page,q.id,q.area);await expect(page.locator('#missionName')).toHaveText(q.name);await leave(page);}
+});

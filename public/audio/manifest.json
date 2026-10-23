@@ -1,0 +1,194 @@
+[
+  {
+    "file": "music/battle.wav",
+    "author": "Emma_MA",
+    "source": "https://opengameart.org/content/determined-pursuit-epic-orchestra-loop",
+    "license": "CC0-1.0",
+    "bytes": 19052830,
+    "sha256": "e4f3be098b50213b56a60aefe60fffae79cd9f7c9008088f93c187ef1bbc856b"
+  },
+  {
+    "file": "music/home.mp3",
+    "author": "TAD",
+    "source": "https://opengameart.org/content/once-upon-a-time-loop",
+    "license": "CC0-1.0",
+    "bytes": 1848968,
+    "sha256": "20c5f05efcf9fd973c4eda5d9d4f214a64ae81e0dbc4e4cd1356b1b41475e280"
+  },
+  {
+    "file": "sfx/back_001.ogg",
+    "author": "Kenney",
+    "source": "https://kenney.nl/assets/interface-sounds",
+    "license": "CC0-1.0",
+    "bytes": 6997,
+    "sha256": "07db973f79f6ae0f2edc34561e7592e24d0577455919fb602cb8ecc0da991dcf"
+  },
+  {
+    "file": "sfx/click_001.ogg",
+    "author": "Kenney",
+    "source": "https://kenney.nl/assets/interface-sounds",
+    "license": "CC0-1.0",
+    "bytes": 4876,
+    "sha256": "ccfb7fa0cccdd9faec0eb16033c732b1e308d139d80f799161495d58f7adcdb9"
+  },
+  {
+    "file": "sfx/close_001.ogg",
+    "author": "Kenney",
+    "source": "https://kenney.nl/assets/interface-sounds",
+    "license": "CC0-1.0",
+    "bytes": 9915,
+    "sha256": "44af8249b933e0fd35ec957a638bb1a0b01f85b53fbe9674bf77bd3ca3168ef4"
+  },
+  {
+    "file": "sfx/confirmation_001.ogg",
+    "author": "Kenney",
+    "source": "https://kenney.nl/assets/interface-sounds",
+    "license": "CC0-1.0",
+    "bytes": 8968,
+    "sha256": "063564703b6094d70718a3e787a55cc9141611e4ecd6b6637f8828f79b4a8c3a"
+  },
+  {
+    "file": "sfx/confirmation_004.ogg",
+    "author": "Kenney",
+    "source": "https://kenney.nl/assets/interface-sounds",
+    "license": "CC0-1.0",
+    "bytes": 12391,
+    "sha256": "568967a3d9f8a8f6af54ea01729c4882284308f2a27d78c07ffd7ee0d6951661"
+  },
+  {
+    "file": "sfx/error_001.ogg",
+    "author": "Kenney",
+    "source": "https://kenney.nl/assets/interface-sounds",
+    "license": "CC0-1.0",
+    "bytes": 7373,
+    "sha256": "46e67425d16339772e8d328fb36a49426c9467418686e11beeb71ff84b0f6433"
+  },
+  {
+    "file": "sfx/footstep_carpet_000.ogg",
+    "author": "Kenney",
+    "source": "https://kenney.nl/assets/impact-sounds",
+    "license": "CC0-1.0",
+    "bytes": 6353,
+    "sha256": "b9524658b52a99a20590f8feefc103088637fd13ea8ec35811aee785e1f2f330"
+  },
+  {
+    "file": "sfx/footstep_concrete_000.ogg",
+    "author": "Kenney",
+    "source": "https://kenney.nl/assets/impact-sounds",
+    "license": "CC0-1.0",
+    "bytes": 5808,
+    "sha256": "d7267e183067757c92c169de2a379abea592cfca6b39bb2e8feea15221ad79fe"
+  },
+  {
+    "file": "sfx/glass_001.ogg",
+    "author": "Kenney",
+    "source": "https://kenney.nl/assets/interface-sounds",
+    "license": "CC0-1.0",
+    "bytes": 6103,
+    "sha256": "183eebee20eb0a532b0b85104d139cbf2673eb66d95c3cc733ac9ea98362e7e8"
+  },
+  {
+    "file": "sfx/glitch_001.ogg",
+    "author": "Kenney",
+    "source": "https://kenney.nl/assets/interface-sounds",
+    "license": "CC0-1.0",
+    "bytes": 5121,
+    "sha256": "da78c642bbd95da2c364ed0e991ebbfc5a4c0d281165d932b5819e0dd31a39d2"
+  },
+  {
+    "file": "sfx/impactMetal_light_000.ogg",
+    "author": "Kenney",
+    "source": "https://kenney.nl/assets/impact-sounds",
+    "license": "CC0-1.0",
+    "bytes": 7651,
+    "sha256": "33b5e6e37c6e9d54e07bf5a89b12c76e879f40c1ea83cdd82714df1d6f9fec6d"
+  },
+  {
+    "file": "sfx/impactMining_000.ogg",
+    "author": "Kenney",
+    "source": "https://kenney.nl/assets/impact-sounds",
+    "license": "CC0-1.0",
+    "bytes": 12035,
+    "sha256": "36b4ea107222d073c67ca64dde26944975609202d5090b2f2021213c1a7e35cd"
+  },
+  {
+    "file": "sfx/impactPunch_heavy_000.ogg",
+    "author": "Kenney",
+    "source": "https://kenney.nl/assets/impact-sounds",
+    "license": "CC0-1.0",
+    "bytes": 11617,
+    "sha256": "b33a8f14068aec24ec69ba85e5e87fdc41228975f6a1a3e44a6e7d6fc3d9f8d8"
+  },
+  {
+    "file": "sfx/impactWood_heavy_000.ogg",
+    "author": "Kenney",
+    "source": "https://kenney.nl/assets/impact-sounds",
+    "license": "CC0-1.0",
+    "bytes": 6233,
+    "sha256": "15ff82332f342c30e469215539e1cc57e11b221aa2cf7e11e811d313a9927f3d"
+  },
+  {
+    "file": "sfx/maximize_001.ogg",
+    "author": "Kenney",
+    "source": "https://kenney.nl/assets/interface-sounds",
+    "license": "CC0-1.0",
+    "bytes": 12111,
+    "sha256": "fd3e75e1de2f2fda90aceeacaeb0427ac8bddd3b07a6ce2a8f9ba923df3771f9"
+  },
+  {
+    "file": "sfx/minimize_001.ogg",
+    "author": "Kenney",
+    "source": "https://kenney.nl/assets/interface-sounds",
+    "license": "CC0-1.0",
+    "bytes": 11924,
+    "sha256": "8481912bc7fa5828924a00ef15b6cd613b994956e0817bd3122065c9b2896d2d"
+  },
+  {
+    "file": "sfx/open_001.ogg",
+    "author": "Kenney",
+    "source": "https://kenney.nl/assets/interface-sounds",
+    "license": "CC0-1.0",
+    "bytes": 9834,
+    "sha256": "a27c6bb0df7da1e6af5dd5937593c98bc58b6e513f42fe6a3254cd6a6949c648"
+  },
+  {
+    "file": "sfx/pluck_001.ogg",
+    "author": "Kenney",
+    "source": "https://kenney.nl/assets/interface-sounds",
+    "license": "CC0-1.0",
+    "bytes": 6317,
+    "sha256": "be97ec4893a02d6eccfb678daa76c83e34cb2583b834ec2593d2641def739fa4"
+  },
+  {
+    "file": "sfx/select_001.ogg",
+    "author": "Kenney",
+    "source": "https://kenney.nl/assets/interface-sounds",
+    "license": "CC0-1.0",
+    "bytes": 5468,
+    "sha256": "aec0c31ea934a35936ae0d2ab8fac8123c93aa5647f935853a58dbaf90278b7a"
+  },
+  {
+    "file": "sfx/switch_001.ogg",
+    "author": "Kenney",
+    "source": "https://kenney.nl/assets/interface-sounds",
+    "license": "CC0-1.0",
+    "bytes": 6753,
+    "sha256": "3b74efad87f1e69dbd1d05c5ad952ab90859b5a3d11da6ec5bd79b4f03b42afa"
+  },
+  {
+    "file": "sfx/departure.ogg",
+    "author": "Graciano Choc - Bz.gamedev (gchoc)",
+    "source": "https://opengameart.org/content/trumpet-fanfare",
+    "license": "CC0-1.0",
+    "bytes": 61363,
+    "sha256": "a7d37b48477f22f6699eacffebade031079fa0649d0d3b3fbe2bd2da4f6c71eb"
+  },
+  {
+    "file": "music/victory.ogg",
+    "author": "yd",
+    "source": "https://opengameart.org/content/forgotten-victory",
+    "license": "CC0-1.0",
+    "bytes": 3845115,
+    "sha256": "3a3f980a285588ad88ce47482a8663b17ec7c8cf6ff35e893d83c9cc0ba3f076"
+  }
+]

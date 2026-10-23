@@ -1,0 +1,7 @@
+import {describe,it,expect} from 'vitest';
+import {houndSpecials,specialAssignments,coordinatedTarget,canShiftObstacle} from '../src/game/battle-kit';
+describe('四枠の技と基本連携',()=>{
+ it('全猟犬の専用技は二つで、灯火・遮蔽物も専用枠に入る',()=>{for(const id of Object.keys(specialAssignments)){const skills=houndSpecials(id);expect(skills).toHaveLength(2);expect(new Set(skills.map(s=>s.id)).size).toBe(2);}expect(houndSpecials('dawn').map(s=>s.id)).toEqual(['lamp','beam']);expect(houndSpecials('dusk').map(s=>s.id)).toEqual(['block','veil']);});
+ it('チャージや使用回数に関係なく、反対側の隣接二匹だけが連携できる',()=>{const target={x:5,y:4,hp:20};const dogs={light:{x:4,y:4,hp:8},shadow:{x:6,y:4,hp:7}};expect(coordinatedTarget(dogs,[target])).toBe(target);expect(coordinatedTarget({...dogs,shadow:{x:6,y:5,hp:7}},[target])).toBeUndefined();expect(coordinatedTarget({...dogs,shadow:{...dogs.shadow,incapacitated:true}},[target])).toBeUndefined();expect(coordinatedTarget({...dogs,shadow:{...dogs.shadow,hp:0}},[target])).toBeUndefined();});
+ it('遮蔽物の移動先は周囲3マスの空いた床だけ',()=>{const origin={x:4,y:4},from={x:5,y:4},board={contains:(p:{x:number;y:number})=>p.x>=0&&p.x<14&&p.y>=0&&p.y<8,free:(p:{x:number;y:number})=>p.x!==6};expect(canShiftObstacle(origin,from,{x:4,y:5},board)).toBe(true);expect(canShiftObstacle(origin,from,{x:6,y:4},board)).toBe(false);expect(canShiftObstacle(origin,from,{x:8,y:4},board)).toBe(false);expect(canShiftObstacle(origin,from,from,board)).toBe(false);});
+});
