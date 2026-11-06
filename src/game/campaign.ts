@@ -56,3 +56,13 @@ export function questUnlocked(id:string,cleared:readonly string[],legacy=false):
  if(id==='castle-heart'&&!cleared.includes(id)&&!liberationState(cleared).finalReady)return false;
  return i>=0&&(i===0||cleared.includes(id)||cleared.includes(campaignQuests[i-1].id)||(legacy&&i<4));
 }
+
+export const endgameVisible=(cleared:readonly string[])=>cleared.includes(campaignQuests[campaignQuests.length-1].id);
+export function visibleStoryQuests(cleared:readonly string[],legacy=false){
+ let lockedShown=false;
+ return campaignQuests.filter(q=>{
+  if(questUnlocked(q.id,cleared,legacy))return true;
+  if(lockedShown)return false;
+  lockedShown=true;return true;
+ });
+}

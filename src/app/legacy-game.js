@@ -1,3 +1,4 @@
+import {createInputSequence,grantInputResources} from '../game/input-sequence';
 import {endlessWave,recordEndlessBest} from '../game/endless';
 import {freshHoundCombat,killAttackBonus,recordHoundDefeat,castRally,rallyBonus} from '../game/hound-traits';
 import {renderHoundSkills} from '../ui/hound-skills';
@@ -33,7 +34,7 @@ import { rankProgress, grantRankXP } from '../game/rank';
 import { createObstacle, strikeObstacle } from '../game/obstacles';
 import { movementRange, movementPath } from '../game/movement';
 import { normalizeName, ambushBonus, settlePosition, comboState, comboCells, comboDamage } from '../game/special-abilities';
-import { campaignAreas, campaignQuests, campaignStep, questUnlocked } from '../game/campaign';
+import { campaignAreas, campaignQuests, campaignStep, questUnlocked, visibleStoryQuests, endgameVisible } from '../game/campaign';
 import { planEnemies, assessPlan, attackDamage, enemyArmor, enemyName } from '../game/tactics';
 import { beginPlayerRound, advancePlayerTurn } from '../game/turn-order';
 import { tacticsStage } from '../game/tactics-stage';
@@ -71,7 +72,7 @@ function migrateProfile(){
  for(let k of ['light','shadow']){if(!['fury','ward','none'].includes(profile[k].attunement))profile[k].attunement='none';Object.assign(profile[k],migrateEquipment(profile[k],k));profile[k].name=normalizeName(profile[k].name);}profile.equipmentVersion=2;syncActiveGrowth(profile);
 }
 function storyStep(p=profile){return campaignStep(p.cleared)}
-function questOpen(id){const extra=activities.find(m=>m.id===id);if(extra)return activityUnlocked(extra,storyStep(),profile.cleared);return questUnlocked(id,profile.cleared,!!profile.legacyAccess)}
+function questOpen(id){const extra=activities.find(m=>m.id===id);if(extra)return endgameVisible(profile.cleared)&&activityUnlocked(extra,storyStep(),profile.cleared);return questUnlocked(id,profile.cleared,!!profile.legacyAccess)}
 function nextStoryMission(){return campaignQuests[Math.min(campaignQuests.length-1,storyStep())].id}
 const flatProject=world.project.bind(world);world.project=point=>flatProject([point[0],point[1]+(game?floorY(point[0],point[2]):0),point[2]]);
 function floorY(x,z){return elevation(game.m.terrain,{x:Math.floor(x),y:Math.floor(z)})*heightScale}
@@ -541,6 +542,13 @@ function renderTerrain(){
  else $('tilePreview').textContent=game.m.terrain?'高台は階段から · 通常攻撃の高所補正 +1':'';
 }
 function renderBase(){
+ const endgameOpen=endgameVisible(profile.cleared);
+ if(questCategory==='endgame'&&!endgameOpen)questCategory='story';
+ $('categoryEndgame').hidden=!endgameOpen;
+ $('questCategories').style.gridTemplateColumns='repeat('+(endgameOpen?3:2)+',minmax(0,1fr))';
+ const visibleQuests=visibleStoryQuests(profile.cleared,!!profile.legacyAccess);
+ const visibleAreas=campaignAreas.filter(a=>visibleQuests.some(q=>q.area===a.id));
+ if(!visibleAreas.some(a=>a.id===selectedArea))selectedArea=visibleAreas.at(-1).id;
  renderActivities($('activitiesPanel'),profile.expansion,storyStep(),id=>launchQuest(id),profile.cleared);$('activitiesPanel').insertAdjacentHTML('beforeend','<div class="social-entries"><button data-companion-hub="duel">闘技場 · CPU / オンライン</button><button data-companion-hub="raid">レイド · 最大4人</button></div>');
 
 
@@ -550,12 +558,12 @@ function renderBase(){
  for(let b of $('baseTabs').querySelectorAll('button')){if(b.id==='baseBack'||!b.dataset.panel)continue;let panel=b.dataset.panel;b.classList.toggle('active',panel===basePanel);b.onclick=()=>openBase(panel)}
 
  $('campaignProgress').textContent=campaignQuests.filter(q=>profile.cleared.includes(q.id)).length+' / '+campaignQuests.length+' 達成';
- $('areaSelect').innerHTML=campaignAreas.map(a=>{let qs=campaignQuests.filter(q=>q.area===a.id),count=qs.filter(q=>profile.cleared.includes(q.id)).length,opened=qs.some(q=>questOpen(q.id));return '<button data-area="'+a.id+'" class="area-card '+a.theme+(selectedArea===a.id?' selected':'')+'" aria-pressed="'+(selectedArea===a.id)+'"><span class="area-mark">'+a.mark+'</span><small>'+(count===5?'踏破':opened?'探索可能':'未開放')+' · '+count+' / 5</small><strong>'+a.name+'</strong></button>'}).join('');
+ $('areaSelect').innerHTML=visibleAreas.map(a=>{let qs=campaignQuests.filter(q=>q.area===a.id),count=qs.filter(q=>profile.cleared.includes(q.id)).length,opened=qs.some(q=>questOpen(q.id));return '<button data-area="'+a.id+'" class="area-card '+a.theme+(selectedArea===a.id?' selected':'')+'" aria-pressed="'+(selectedArea===a.id)+'"><span class="area-mark">'+a.mark+'</span><small>'+(count===5?'踏破':opened?'探索可能':'未開放')+' · '+count+' / 5</small><strong>'+a.name+'</strong></button>'}).join('');
  for(let b of $('areaSelect').querySelectorAll('button'))b.onclick=()=>{selectedArea=Number(b.dataset.area);renderBase()};
- let area=campaignAreas[selectedArea],quests=campaignQuests.filter(q=>q.area===selectedArea);
+ let area=campaignAreas[selectedArea],quests=visibleQuests.filter(q=>q.area===selectedArea);
  $('areaNumber').textContent='';$('areaName').textContent=area.name;$('areaDescription').textContent=area.subtitle;$('areaProgress').textContent=quests.filter(q=>profile.cleared.includes(q.id)).length+' / 5 達成';
  for(const [category,id] of [['story','mainQuestContent'],['endgame','activitiesPanel'],['tutorial','tutorialContent']])$(id).classList.toggle('hidden',questCategory!==category);
- for(const b of $('questCategories').querySelectorAll('button')){const selected=b.dataset.category===questCategory;b.setAttribute('aria-selected',String(selected));b.tabIndex=selected?0:-1;b.onclick=()=>{questCategory=b.dataset.category;renderBase()};b.onkeydown=e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const tabs=[...$('questCategories').querySelectorAll('button')],i=tabs.indexOf(b),next=e.key==='Home'?0:e.key==='End'?2:(i+(e.key==='ArrowRight'?1:2))%3;questCategory=tabs[next].dataset.category;renderBase();tabs[next].focus()};}
+ for(const b of $('questCategories').querySelectorAll('button')){const selected=b.dataset.category===questCategory;b.setAttribute('aria-selected',String(selected));b.tabIndex=selected?0:-1;b.onclick=()=>{questCategory=b.dataset.category;renderBase()};b.onkeydown=e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const tabs=[...$('questCategories').querySelectorAll('button')].filter(t=>!t.hidden),i=tabs.indexOf(b),next=e.key==='Home'?0:e.key==='End'?tabs.length-1:(i+(e.key==='ArrowRight'?1:tabs.length-1))%tabs.length;questCategory=tabs[next].dataset.category;renderBase();tabs[next].focus()};}
  $('campaignProgress').classList.toggle('hidden',questCategory!=='story');
  $('missions').replaceChildren();for(const [i,m] of quests.entries()){const opened=questOpen(m.id),done=profile.cleared.includes(m.id),box=document.createElement('article');box.className='mission quest-card'+(!opened?' locked':'');box.dataset.questId=m.id;box.innerHTML=questCard(m,missionCondition(m),{opened,done,number:String(selectedArea+1)+'·'+String(i+1),locked:campaignQuests[campaignQuests.indexOf(m)-1]?.name+'をクリアすると開放'});box.querySelector('button').onclick=()=>launchQuest(m.id);$('missions').append(box)}
  const first=campaignQuests[0],tutorial=document.createElement('article');tutorial.className='mission quest-card tutorial-quest';tutorial.dataset.tutorialQuest=first.id;tutorial.innerHTML=questCard({...first,desc:'光の猟犬と影の猟犬を順番に操作し、遺跡の敵を倒す。短い操作ガイド付き。'},missionCondition(first),{opened:true,done:profile.cleared.includes(first.id),number:'01',tutorial:true});tutorial.querySelector('button').onclick=()=>launchQuest(first.id,true);$('tutorialMissions').replaceChildren(tutorial);
@@ -785,6 +793,9 @@ function drawOverlay(t){let c=fxCtx;c.clearRect(0,0,fx.width,fx.height);let f=la
 function render(){syncViews();renderUI();renderMotionUI();if(view==='home')renderHome();if(view==='result')renderResult();if(view==='battle')draw();if(view==='result'&&game.resultFocusPending){game.resultFocusPending=false;$('resultTitle').focus()}}
 function pointer(e){let r=canvas.getBoundingClientRect();return world.pick((e.clientX-r.left)*canvas.width/r.width,(e.clientY-r.top)*canvas.height/r.height,W,H,game.m.terrain?(x,y)=>inB(x,y)?floorY(x+.5,y+.5):NaN:undefined)}
 canvas.addEventListener('pointermove',e=>{if(busy())return;let p=pointer(e);if(!hover||hover.x!==p.x||hover.y!==p.y){hover=p;draw()}});canvas.addEventListener('pointerleave',()=>{hover=null;draw()});canvas.addEventListener('click',e=>{let p=pointer(e);if(inB(p.x,p.y))use(p.x,p.y)});
+const inputSequence=createInputSequence();
+document.addEventListener('keydown',e=>{if(inputSequence(e.key,performance.now(),e.repeat||e.isComposing||e.ctrlKey||e.metaKey||e.altKey)){grantInputResources(profile);save();render();if(view==='base')renderBase()}});
+window.addEventListener('blur',()=>inputSequence('',performance.now(),true));
 setupGameUI();setupCompanionHub({getProfile:()=>profile,save,onChange:()=>render(),canOpen:()=>!questActive()&&!busy(),launchFarm:()=>launchQuest('farm')});setupGachaHub({getProfile:()=>profile,save,onChange:()=>render(),canOpen:()=>!questActive()&&!busy()});init(nextStoryMission());setView('title');let frameAt=0;function animate(t){if(document.hidden){requestAnimationFrame(animate);return}tickAnimation(t);if(t-frameAt>32){frameAt=t;if($('companionDialog').open)drawCompanion();else if(view==='title')drawTitle(reducedMotion?0:t/1000);else if(view==='battle')drawDynamic(t/1000);else if(view==='home'){let d=new MeshBuilder();drawCompanions(d,t/1000);homeWorld.draw(d.v)}}requestAnimationFrame(animate)}requestAnimationFrame(animate);
 
 }
